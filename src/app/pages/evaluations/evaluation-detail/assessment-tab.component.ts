@@ -113,25 +113,9 @@ export class AssessmentTabComponent {
     );
   }
 
-  get hasPending(): boolean {
-    return this.assessments.some(row => row.status === 'PENDING');
-  }
-
-  createAll(): void {
-    // El admin-button vive en una celda dinámica de admin-table y su clic corre
-    // FUERA de la zona de Angular: cdr.detectChanges no repinta la tabla de forma
-    // fiable. Re-entrar en la zona dispara un tick global que rebinda [rowData].
-    this.zone.run(() => {
-      for (const row of this.assessments) {
-        if (row.status === 'PENDING') {
-          this.assessmentsService.create(this.evaluationId, row.id, 'Iván Espeso');
-        }
-      }
-    });
-  }
-
   handleAction(action: string, row: IAssessmentRow): void {
-    // Mismo motivo que createAll: el clic llega desde una celda fuera de NgZone.
+    // El clic llega desde una celda dinámica de admin-table → FUERA de la zona de
+    // Angular. Re-entrar en la zona dispara un tick global que repinta la tabla.
     this.zone.run(() => {
       if (action === 'create' || action === 'import') {
         this.assessmentsService.create(this.evaluationId, row.id, 'Iván Espeso');
