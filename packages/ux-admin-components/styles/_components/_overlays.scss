@@ -1,0 +1,52 @@
+@use '@angular/material' as mat;
+@use '../_config/variables' as vars;
+@use '../_config/palettes' as palettes;
+@use '../_base/typography' as mixins;
+
+/*  ============ POPUP STYLES ============ */
+.cdk-overlay-pane.admin-popup.mat-mdc-dialog-panel .mat-mdc-dialog-surface {
+  border-radius: 16px;
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.16);
+}
+
+/*  ============ SNACKBAR STYLES ============ */
+.cdk-overlay-pane .mat-mdc-snack-bar-container {
+  .mdc-snackbar__surface {
+    width: 320px;
+  }
+
+  &.admin-snackbar-neutral {
+    .mdc-snackbar__surface {
+      background-color: var(--snackbar-neutral-background-color);
+      .mdc-snackbar__label {
+        @include mixins.text-p;
+        color: var(--snackbar-neutral-text-color);
+        padding: 16px;
+      }
+    }
+    &.admin-snackbar-light {
+      --snackbar-neutral-background-color: #{vars.$secondary-surface};
+      --snackbar-neutral-text-color: #{vars.$text-high};
+    }
+    &.admin-snackbar-dark {
+      --snackbar-neutral-background-color: #{vars.$secondary-surface-dark};
+      --snackbar-neutral-text-color: #{vars.$text-high-dark};
+    }
+  }
+
+  &.admin-snackbar-warn .mdc-snackbar__surface {
+    background-color: mat.get-color-from-palette(palettes.$md-warn, 500);
+    .mdc-snackbar__label {
+      @include mixins.text-p;
+      color: mat.get-contrast-color-from-palette(palettes.$md-warn, 500);
+    }
+  }
+
+  &.admin-snackbar-success .mdc-snackbar__surface {
+    background-color: mat.get-color-from-palette(palettes.$md-success, 500);
+    .mdc-snackbar__label {
+      @include mixins.text-p;
+      color: mat.get-contrast-color-from-palette(palettes.$md-success, 700);
+    }
+  }
+}

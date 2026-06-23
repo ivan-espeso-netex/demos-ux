@@ -1,0 +1,306 @@
+@use '@angular/material' as mat;
+@use 'palettes' as palettes;
+
+$color-white: #ffffff;
+$color-white-00: rgba(255, 255, 255, 0.0);
+$color-white-01: rgba(255, 255, 255, 0.1);
+$color-white-02: rgba(255, 255, 255, 0.2);
+$color-white-03: rgba(255, 255, 255, 0.3);
+$color-white-04: rgba(255, 255, 255, 0.4);
+$color-white-05: rgba(255, 255, 255, 0.5);
+$color-white-06: rgba(255, 255, 255, 0.6);
+$color-white-07: rgba(255, 255, 255, 0.7);
+$color-white-08: rgba(255, 255, 255, 0.8);
+$color-white-09: rgba(255, 255, 255, 0.9);
+
+$color-black: #1A1A1A;
+$color-black-01: rgba(26, 26, 26, 0.1);
+$color-black-02: rgba(26, 26, 26, 0.2);
+
+$shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.16);
+
+$secondary-logo-gradient: linear-gradient(90deg, #5fc3eb 20%, #8dd4f1 80%);
+
+$text-low: mat.get-color-from-palette(palettes.$md-gray, 700);
+$text-low-dark: mat.get-color-from-palette(palettes.$md-gray, 100);
+
+$text-high: mat.get-color-from-palette(palettes.$md-gray, 900);
+$text-high-dark: $color-white;
+
+$text-p: mat.get-color-from-palette(palettes.$md-gray, 700);
+$text-p-dark: mat.get-color-from-palette(palettes.$md-gray, 700);
+
+$table-label: mat.get-color-from-palette(palettes.$md-gray, 900);
+$table-label-dark: mat.get-color-from-palette(palettes.$md-gray, 100);
+
+$placeholder-label: mat.get-color-from-palette(palettes.$md-gray, 500);
+$placeholder-label-dark: mat.get-color-from-palette(palettes.$md-gray, 500);
+
+$placeholder-written-label: mat.get-color-from-palette(palettes.$md-gray, 900);
+$placeholder-written-label-dark: $color-white;
+
+$input-background: $color-white;
+$input-background-dark: mat.get-color-from-palette(palettes.$md-gray, 800);
+
+$input-background-hover: mat.get-color-from-palette(palettes.$md-gray, 50);
+$input-background-hover-dark: mat.get-color-from-palette(palettes.$md-gray, 700);
+
+$border: mat.get-color-from-palette(palettes.$md-gray, 300);
+$border-dark: mat.get-color-from-palette(palettes.$md-gray, 800);
+
+$border-darker: mat.get-color-from-palette(palettes.$md-gray, 400);
+$border-darker-dark: mat.get-color-from-palette(palettes.$md-gray, 700);
+
+$scrollbar-bg: mat.get-color-from-palette(palettes.$md-gray, 200);
+$scrollbar-bg-dark: mat.get-color-from-palette(palettes.$md-gray, 700);
+
+$scrollbar-progress: mat.get-color-from-palette(palettes.$md-gray, 500);
+$scrollbar-progress-dark: mat.get-color-from-palette(palettes.$md-gray, 900);
+
+$header-surface: $color-white;
+$header-surface-dark: mat.get-contrast-color-from-palette(palettes.$md-gray, 500);
+
+$table-surface: $color-white;
+$table-surface-dark: mat.get-contrast-color-from-palette(palettes.$md-gray, 500);
+
+$surface: mat.get-contrast-color-from-palette(palettes.$md-gray, 600);
+$surface-dark: mat.get-contrast-color-from-palette(palettes.$md-gray, 500);
+
+$surface-warn: mat.get-color-from-palette(palettes.$md-warn, 500);
+$surface-neutral: $color-white;
+$surface-success: mat.get-color-from-palette(palettes.$md-success, 500);
+
+$secondary-surface: $color-white;
+$secondary-surface-dark: #2A2A2A;
+
+$highlight: mat.get-color-from-palette(palettes.$md-accent, 50);
+$highlight-dark: mat.get-contrast-color-from-palette(palettes.$md-gray, 400);
+
+$placeholder-green: mat.get-color-from-palette(palettes.$md-success, 400);
+$placeholder-green-dark: mat.get-color-from-palette(palettes.$md-success, 400);
+
+$placeholder-purple: mat.get-color-from-palette(palettes.$md-purple, 400);
+$placeholder-purple-dark: mat.get-color-from-palette(palettes.$md-purple, 400);
+
+$placeholder-blue: mat.get-color-from-palette(palettes.$md-accent, 400);
+$placeholder-blue-dark: mat.get-color-from-palette(palettes.$md-accent, 400);
+
+$placeholder-red: mat.get-color-from-palette(palettes.$md-warn, 400);
+$placeholder-red-dark: mat.get-color-from-palette(palettes.$md-warn, 400);
+
+$placeholder-yellow: mat.get-color-from-palette(palettes.$md-alert, 400);
+$placeholder-yellow-dark: mat.get-color-from-palette(palettes.$md-alert, 400);
+
+$placeholder-gray: mat.get-color-from-palette(palettes.$md-secondary, 400);
+$placeholder-gray-dark: mat.get-color-from-palette(palettes.$md-secondary, 400);
+
+$placeholder-dark-red: mat.get-color-from-palette(palettes.$md-warn, 900);
+$placeholder-dark-red-dark: mat.get-color-from-palette(palettes.$md-warn, 900);
+
+$placeholder-bordeaux: #3C74DD;
+$placeholder-bordeaux-dark: #3C74DD;
+
+$placeholder-olive: #73AF00;
+$placeholder-olive-dark: #73AF00;
+
+$placeholder-orange: #DD5C3C;
+$placeholder-orange-dark: #DD5C3C;
+
+$placeholder-image-background: mat.get-color-from-palette(palettes.$md-gray, 200);
+$placeholder-image-background-dark: mat.get-color-from-palette(palettes.$md-gray, 800);
+
+$placeholder-image-icon: mat.get-color-from-palette(palettes.$md-gray, 400);
+$placeholder-image-icon-dark: mat.get-color-from-palette(palettes.$md-gray, 600);
+
+$gradient-high: $surface;
+$gradient-high-dark: $surface-dark;
+
+$gradient-low: rgba(244, 244, 244, 0);
+$gradient-low-dark: rgba(26, 26, 26, 0);
+
+$gradient-contrast-high: $color-black-02;
+$gradient-contrast-high-dark: $color-white-02;
+
+$gradient-contrast-low: $color-black-01;
+$gradient-contrast-low-dark: $color-white-01;
+
+
+/********* FLAT BUTTONS *********/
+/*** ACCENT ***/
+$flat-accent-button-label: $color-white;
+$flat-accent-button-label-dark: $color-black;
+
+$flat-accent-button-background: mat.get-color-from-palette(palettes.$md-accent, 500);
+$flat-accent-button-background-dark: mat.get-color-from-palette(palettes.$md-accent, 200);
+
+$flat-accent-button-background-hover: mat.get-color-from-palette(palettes.$md-accent, 700);
+$flat-accent-button-background-hover-dark: mat.get-color-from-palette(palettes.$md-accent, 100);
+
+/*** WARN ***/
+$flat-warn-button-label: $color-white;
+$flat-warn-button-label-dark: $color-white;
+
+$flat-warn-button-background: mat.get-color-from-palette(palettes.$md-warn, 500);
+$flat-warn-button-background-dark: mat.get-color-from-palette(palettes.$md-warn, 500);
+
+$flat-warn-button-background-hover: mat.get-color-from-palette(palettes.$md-warn, 800);
+$flat-warn-button-background-hover-dark: mat.get-color-from-palette(palettes.$md-warn, 800);
+
+/*** PRIMARY ***/
+$flat-primary-button-label: mat.get-color-from-palette(palettes.$md-primary, 900);
+$flat-primary-button-label-dark: mat.get-contrast-color-from-palette(palettes.$md-primary, 900);
+
+$flat-primary-button-background: mat.get-color-from-palette(palettes.$md-primary, 100);
+$flat-primary-button-background-dark: mat.get-color-from-palette(palettes.$md-primary, 800);
+
+$flat-primary-button-background-hover: mat.get-color-from-palette(palettes.$md-primary, 200);
+$flat-primary-button-background-hover-dark: mat.get-color-from-palette(palettes.$md-primary, 900);
+
+
+/********* BASIC BUTTONS *********/
+/*** ACCENT ***/
+$basic-accent-button-label: mat.get-color-from-palette(palettes.$md-accent, 500);
+$basic-accent-button-label-dark: mat.get-color-from-palette(palettes.$md-accent, 200);
+
+$basic-accent-button-label-hover: mat.get-color-from-palette(palettes.$md-accent, 700);
+$basic-accent-button-label-hover-dark: mat.get-color-from-palette(palettes.$md-accent, 100);
+
+$basic-accent-button-background: $color-white-00;
+$basic-accent-button-background-dark: $color-white-00;
+
+$basic-accent-button-background-hover: mat.get-color-from-palette(palettes.$md-accent, 50);
+$basic-accent-button-background-hover-dark: $color-white-01;
+
+/*** WARN ***/
+$basic-warn-button-label: mat.get-color-from-palette(palettes.$md-warn, 500);
+$basic-warn-button-label-dark: mat.get-color-from-palette(palettes.$md-warn, 100);
+
+$basic-warn-button-background: $color-white-00;
+$basic-warn-button-background-dark: $color-white-00;
+
+$basic-warn-button-background-hover: mat.get-color-from-palette(palettes.$md-warn, 50);
+$basic-warn-button-background-hover-dark: $color-white-01;
+
+/*** PRIMARY ***/
+$basic-primary-button-label: mat.get-color-from-palette(palettes.$md-primary, 900);
+$basic-primary-button-label-dark: mat.get-contrast-color-from-palette(palettes.$md-primary, 900);
+
+$basic-primary-button-background: $color-white-00;
+$basic-primary-button-background-dark: $color-white-00;
+
+$basic-primary-button-background-hover: mat.get-color-from-palette(palettes.$md-primary, 100);
+$basic-primary-button-background-hover-dark: mat.get-color-from-palette(palettes.$md-primary, 900);
+
+
+/********* STROKED BUTTONS *********/
+/*** ACCENT ***/
+$stroked-accent-button-label: mat.get-color-from-palette(palettes.$md-accent, 500);
+$stroked-accent-button-label-dark: mat.get-color-from-palette(palettes.$md-accent, 300);
+
+$stroked-accent-button-background: $color-white-00;
+$stroked-accent-button-background-dark: $color-white-00;
+
+$stroked-accent-button-background-hover: mat.get-color-from-palette(palettes.$md-accent, 50);
+$stroked-accent-button-background-hover-dark: $color-white-01;
+
+/*** WARN ***/
+$stroked-warn-button-label: mat.get-color-from-palette(palettes.$md-warn, 500);
+$stroked-warn-button-label-dark: mat.get-color-from-palette(palettes.$md-warn, 100);
+
+$stroked-warn-button-background: $color-white-00;
+$stroked-warn-button-background-dark: $color-white-00;
+
+$stroked-warn-button-background-hover: mat.get-color-from-palette(palettes.$md-warn, 50);
+$stroked-warn-button-background-hover-dark: $color-white-01;
+
+/*** PRIMARY ***/
+$stroked-primary-button-label: mat.get-color-from-palette(palettes.$md-primary, 900);
+$stroked-primary-button-label-dark: mat.get-contrast-color-from-palette(palettes.$md-primary, 900);
+
+$stroked-primary-button-background: $color-white-00;
+$stroked-primary-button-background-dark: $color-white-00;
+
+$stroked-primary-button-background-hover: mat.get-color-from-palette(palettes.$md-primary, 100);
+$stroked-primary-button-background-hover-dark: mat.get-color-from-palette(palettes.$md-primary, 900);
+
+
+/********* ICON BUTTONS *********/
+/*** ACCENT ***/
+$icon-accent-button-label: mat.get-color-from-palette(palettes.$md-accent, 500);
+$icon-accent-button-label-dark: mat.get-color-from-palette(palettes.$md-accent, 300);
+
+$icon-accent-button-background: $color-white-00;
+$icon-accent-button-background-dark: $color-white-00;
+
+$icon-accent-button-background-hover: mat.get-color-from-palette(palettes.$md-accent, 50);
+$icon-accent-button-background-hover-dark: $color-white-01;
+
+/*** WARN ***/
+$icon-warn-button-label: mat.get-color-from-palette(palettes.$md-warn, 500);
+$icon-warn-button-label-dark: mat.get-color-from-palette(palettes.$md-warn, 100);
+
+$icon-warn-button-background: $color-white-00;
+$icon-warn-button-background-dark: $color-white-00;
+
+$icon-warn-button-background-hover: mat.get-color-from-palette(palettes.$md-warn, 50);
+$icon-warn-button-background-hover-dark: $color-white-01;
+
+/*** PRIMARY ***/
+$icon-primary-button-label: mat.get-color-from-palette(palettes.$md-primary, 900);
+$icon-primary-button-label-dark: mat.get-contrast-color-from-palette(palettes.$md-primary, 900);
+
+$icon-primary-button-background: $color-white-00;
+$icon-primary-button-background-dark: $color-white-00;
+
+$icon-primary-button-background-hover: mat.get-color-from-palette(palettes.$md-primary, 100);
+$icon-primary-button-background-hover-dark: mat.get-color-from-palette(palettes.$md-primary, 900);
+
+
+/********* EXPANSION PANEL BUTTON *********/
+$expansion-panel-button-label: mat.get-color-from-palette(palettes.$md-gray, 900);
+$expansion-panel-button-label-dark: mat.get-contrast-color-from-palette(palettes.$md-primary, 900);
+
+$expansion-panel-button-background: mat.get-contrast-color-from-palette(palettes.$md-primary, 900);
+$expansion-panel-button-background-dark: mat.get-color-from-palette(palettes.$md-gray, 900);
+
+$expansion-panel-button-background-hover: mat.get-color-from-palette(palettes.$md-primary, 100);
+$expansion-panel-button-background-hover-dark: mat.get-color-from-palette(palettes.$md-gray, 700);
+
+$expansion-panel-button-background-selected: mat.get-color-from-palette(palettes.$md-primary, 100);
+$expansion-panel-button-background-selected-dark: mat.get-color-from-palette(palettes.$md-gray, 700);
+
+
+/********* AUX SIDENAV BUTTONS *********/
+$aux-sidenav-primary-button-label: mat.get-color-from-palette(palettes.$md-primary, 900);
+$aux-sidenav-primary-button-label-dark: mat.get-contrast-color-from-palette(palettes.$md-primary, 900);
+
+$aux-sidenav-primary-button-background: mat.get-color-from-palette(palettes.$md-gray, 200);
+$aux-sidenav-primary-button-background-dark: mat.get-color-from-palette(palettes.$md-gray, 800);
+
+$aux-sidenav-secondary-button-label: mat.get-color-from-palette(palettes.$md-primary, 900);
+$aux-sidenav-secondary-button-label-dark: mat.get-color-from-palette(palettes.$md-primary, 200);
+
+$aux-sidenav-secondary-button-background: mat.get-color-from-palette(palettes.$md-gray, 200);
+$aux-sidenav-secondary-button-background-dark: mat.get-color-from-palette(palettes.$md-gray, 800);
+
+/********* SLIDER *********/
+$slider-track-active-color: mat.get-color-from-palette(palettes.$md-accent, 500);
+
+
+
+/********* SPACING AND RADIUS *********/
+$space-xxs: 4px;
+$space-xs: 8px;
+$space-sm: 12px;
+$space-md: 16px;
+$space-lg: 32px;
+$space-xl: 64px;
+$space-xxl: 128px;
+
+$radius-xxs: 4px;
+$radius-xs: 8px;
+$radius-sm: 12px;
+$radius-md: 16px;
+$radius-lg: 32px;
+$radius-xl: 64px;
+$radius-xxl: 100px;

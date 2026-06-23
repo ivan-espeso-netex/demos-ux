@@ -1,0 +1,76 @@
+<div class="idp-tab">
+
+  <!-- Empty state -->
+  <ng-container *ngIf="actions.length === 0">
+    <admin-no-content-placeholders
+      title="No IDP actions yet"
+      description="Create the first development action for this user's Individual Development Plan"
+      [imgEntity]="ImgEntityType.PLACEHOLDER_NO_CONTENT"
+      [menuButtonConfig]="addEmptyConfig"
+      (menuButtonClicked)="openAddPanel()">
+    </admin-no-content-placeholders>
+  </ng-container>
+
+  <!-- Actions list -->
+  <ng-container *ngIf="actions.length > 0">
+    <div class="idp-header">
+      <admin-button
+        text="Add IDP action"
+        [buttonType]="EButtonButtonType.MATFLATBUTTON"
+        [color]="EButtonColor.ACCENT"
+        [leftIcon]="EIconName.ADD"
+        (buttonClicked)="openAddPanel()">
+      </admin-button>
+    </div>
+
+    <div class="idp-actions-list">
+      <div class="idp-action-card" *ngFor="let action of actions; let i = index">
+        <div class="idp-action-card__header">
+          <span class="idp-action-card__number">{{ i + 1 }}</span>
+          <div class="idp-action-card__header-actions">
+            <button mat-icon-button [matMenuTriggerFor]="actionMenu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #actionMenu="matMenu">
+              <button mat-menu-item (click)="openEditPanel(action)">
+                <mat-icon>edit</mat-icon>
+                <span>Edit</span>
+              </button>
+              <button mat-menu-item class="menu-item--delete" (click)="onDeleteAction(action)">
+                <mat-icon>delete</mat-icon>
+                <span>Delete</span>
+              </button>
+            </mat-menu>
+          </div>
+        </div>
+
+        <h3 class="idp-action-card__title">{{ action.title }}</h3>
+
+        <div class="idp-action-card__section">
+          <span class="idp-action-card__section-label">OBJECTIVE</span>
+          <p class="idp-action-card__section-text">{{ action.objective }}</p>
+        </div>
+
+        <div class="idp-action-card__section" *ngIf="action.kpis.length > 0">
+          <span class="idp-action-card__section-label">KPIS / EXPECTED RESULTS</span>
+          <ul class="idp-action-card__kpi-list">
+            <li *ngFor="let kpi of action.kpis">{{ kpi }}</li>
+          </ul>
+        </div>
+
+        <div class="idp-action-card__section">
+          <span class="idp-action-card__section-label">TIMELINE</span>
+          <p class="idp-action-card__section-text">{{ action.timeline }}</p>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+</div>
+
+<app-add-idp-action-panel
+  *ngIf="showAddPanel"
+  [action]="editingAction"
+  (actionSaved)="onActionSaved($event)"
+  (closed)="showAddPanel = false; editingAction = null">
+</app-add-idp-action-panel>

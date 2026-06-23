@@ -1,0 +1,21 @@
+<div class="assessment-tab">
+
+  <!-- No target users → no assessments possible -->
+  <div class="assessment-empty" *ngIf="jobRoles.length === 0">
+    <admin-no-content-placeholders
+      title="No assessments available yet"
+      description="Add target users first to generate the assessment list"
+      [imgEntity]="ImgEntityType.PLACEHOLDER_NO_CONTENT">
+    </admin-no-content-placeholders>
+  </div>
+
+  <!-- Assessment table -->
+  <div class="assessment-content" *ngIf="jobRoles.length > 0">
+    <admin-table
+      [columnDefinition]="columnDefinition"
+      [rowData]="assessments"
+      status="loaded-data">
+    </admin-table>
+  </div>
+
+</div>

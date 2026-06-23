@@ -1,0 +1,36 @@
+// index.scss
+// Punto de entrada único para todos los estilos de la librería
+// Este archivo debe importarse en el angular.json del proyecto consumidor
+
+/*  ============================================
+    ADMIN COMPONENTS - GLOBAL STYLES
+    ============================================ */
+
+// 1. CONFIGURACIÓN (exporta variables, mixins, funciones)
+//    Estos archivos no generan CSS, solo definiciones
+@forward '_config/palettes';
+@forward '_config/variables';
+@forward '_base/typography';
+
+// 2. TEMA DE ANGULAR MATERIAL
+//    Debe cargarse antes que los componentes
+@use '_config/theme';
+
+// 3. TIPOGRAFÍA Y FUENTES
+//    Define @font-face para fuentes personalizadas
+@use '../typography/_fonts' as fonts;
+
+// 4. ICONOS
+//    Define @font-face y clases para iconos
+@use '../icons/material-icons/_material-icons' as material-icons;
+@use '../icons/custom/_custom-icons' as custom-icons;
+
+// 5. COMPONENTES GLOBALES
+//    Estilos para componentes que se renderizan fuera del árbol (overlays, dialogs, etc.)
+@use '_components/overlays';
+@use '_components/color-picker';
+@use '_components/links';
+
+/*  ============================================
+    FIN DE ESTILOS GLOBALES
+    ============================================ */

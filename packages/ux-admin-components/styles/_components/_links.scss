@@ -1,0 +1,22 @@
+@use '../_config/variables' as vars;
+
+a {
+  &.admin-link-text {
+    background: transparent;
+    display: inline;
+    color: vars.$basic-accent-button-label;
+    font-family: "RobotoSemiBold", sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 20px;
+    margin: 0;
+    text-decoration: underline;
+
+    &:hover,
+    &:visited {
+      color: vars.$basic-accent-button-label-hover;
+      cursor: pointer;
+    }
+  }
+}

@@ -1,0 +1,46 @@
+:host {
+  display: block;
+  background: #F4F4F4;
+  border-radius: 0 0 8px 8px;
+  overflow: hidden;
+}
+
+.target-users-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  padding: 40px 24px;
+}
+
+.target-users-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 32px;
+}
+
+.target-users-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+
+  admin-searchbox {
+    min-width: 220px;
+  }
+}
+
+:host ::ng-deep {
+  .admin-table__selection-header:not(.active) {
+    display: none;
+  }
+
+  .admin-table__selection-header.active {
+    .selection-header__actions-wrapper {
+      admin-button button {
+        color: #ffffff !important;
+      }
+    }
+  }
+}

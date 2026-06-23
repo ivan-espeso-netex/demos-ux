@@ -1,0 +1,133 @@
+﻿<div class="form-overlay">
+  <!-- Header (updated) -->
+  <div class="form-header">
+    <div class="form-header__left">
+      <admin-button
+        [buttonType]="EButtonButtonType.MATICONBUTTON"
+        [leftIcon]="EIconName.CLOSE"
+        (buttonClicked)="onClose()">
+      </admin-button>
+      <span class="form-header__title">{{ title }}</span>
+    </div>
+    <div class="form-header__actions">
+      <admin-button
+        text="Cancel"
+        [buttonType]="EButtonButtonType.MATSTROKEDBUTTON"
+        (buttonClicked)="onCancel()">
+      </admin-button>
+      <admin-button
+        text="Save"
+        [buttonType]="EButtonButtonType.MATFLATBUTTON"
+        [color]="EButtonColor.ACCENT"
+        (buttonClicked)="onSave()">
+      </admin-button>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="form-content">
+    <div class="form-section">
+      <h2 class="form-section__title">Basic info</h2>
+
+      <div class="form-field-wrapper">
+        <admin-input
+          [label]="'Evaluation name *'"
+          [placeholder]="'Evaluation 01'"
+          [(ngModel)]="evaluationName">
+        </admin-input>
+        <span class="form-field-error" *ngIf="nameError">{{ nameError }}</span>
+      </div>
+
+      <div class="form-field-wrapper">
+        <admin-textarea
+          [label]="'Description'"
+          [placeholder]="'Description'"
+          [(ngModel)]="description">
+        </admin-textarea>
+      </div>
+
+      <div class="form-field-wrapper">
+        <admin-select
+          [label]="'Evaluation type *'"
+          [options]="evaluationTypeOptions"
+          [(ngModel)]="evaluationType">
+        </admin-select>
+        <span class="form-field-error" *ngIf="typeError">{{ typeError }}</span>
+      </div>
+
+      <div class="form-row">
+        <div class="form-field-wrapper">
+          <admin-datepicker
+            [id]="'start-date'"
+            [label]="'Start date *'"
+            [placeholder]="'4/05/2025'"
+            (dateChange)="onStartDateChange($event)">
+          </admin-datepicker>
+          <span class="form-field-error" *ngIf="startDateError">{{ startDateError }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-divider"></div>
+
+    <div class="form-section">
+      <h2 class="form-section__title">Action plan</h2>
+
+      <admin-checkbox
+        [id]="'allow-manager-action-plan'"
+        [label]="'Allow managers to create an action plan with the evaluees, even before the evaluation has taken place.'"
+        [name]="'allowManagerActionPlan'"
+        [(ngModel)]="allowManagerActionPlan">
+      </admin-checkbox>
+    </div>
+
+    <div class="form-divider"></div>
+
+    <div class="form-section">
+      <h2 class="form-section__title">Time frame</h2>
+      <p class="form-section__subtitle">Set the date range for assessing your target learners.</p>
+
+      <div class="form-row">
+        <div class="form-field-wrapper">
+          <admin-datepicker
+            [id]="'date-init'"
+            [label]="'Date init *'"
+            [placeholder]="'4/05/2025'"
+            (dateChange)="onDateInitChange($event)">
+          </admin-datepicker>
+          <span class="form-field-error" *ngIf="dateInitError">{{ dateInitError }}</span>
+        </div>
+        <div class="form-field-wrapper">
+          <admin-datepicker
+            [id]="'date-end'"
+            [label]="'Date end *'"
+            [placeholder]="'4/07/2025'"
+            (dateChange)="onDateEndChange($event)">
+          </admin-datepicker>
+          <span class="form-field-error" *ngIf="dateEndError">{{ dateEndError }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-divider"></div>
+
+    <div class="form-section">
+      <h2 class="form-section__title">Notifications</h2>
+
+      <admin-checkbox
+        [id]="'notify-evaluator'"
+        [label]="'Notify the evaluator that they have a new pending evaluation.'"
+        [name]="'notifyEvaluator'"
+        [(ngModel)]="notifyEvaluator">
+      </admin-checkbox>
+
+      <admin-checkbox
+        [id]="'notify-user'"
+        [label]="'Notify the user that they have been evaluated.'"
+        [name]="'notifyUser'"
+        [(ngModel)]="notifyUser">
+      </admin-checkbox>
+    </div>
+  </div>
+</div>
+

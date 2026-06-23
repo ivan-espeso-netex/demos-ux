@@ -1,0 +1,39 @@
+<div class="assessments-config">
+  <div class="assessments-config__toolbar">
+    <admin-button
+      text="New Assessment"
+      [buttonType]="EButtonButtonType.MATFLATBUTTON"
+      [color]="EButtonColor.ACCENT"
+      [leftIcon]="EIconName.ADD"
+      (buttonClicked)="onNewAssessment()">
+    </admin-button>
+
+    <admin-searchbox
+      placeholder="Search"
+      [(value)]="searchValue">
+    </admin-searchbox>
+  </div>
+
+  <div class="assessments-config__table" *ngIf="assessments.length > 0">
+    <admin-table
+      [columnDefinition]="columnDefinition"
+      [rowData]="filteredAssessments"
+      [selectable]="false"
+      status="loaded-data">
+    </admin-table>
+  </div>
+
+  <admin-no-content-placeholders
+    *ngIf="assessments.length === 0"
+    title="No assessments yet"
+    description="Create your first assessment to start using it in evaluations"
+    [imgEntity]="ImgEntityType.PLACEHOLDER_NO_CONTENT">
+  </admin-no-content-placeholders>
+</div>
+
+<!-- Panel: evaluaciones donde se usa el assessment -->
+<app-assessment-evaluations-panel
+  *ngIf="showUsagePanel && panelAssessment"
+  [assessment]="panelAssessment"
+  (closed)="closeUsagePanel()">
+</app-assessment-evaluations-panel>

@@ -1,0 +1,47 @@
+import { NgComponentOutlet } from '@angular/common';
+import { Component, computed, forwardRef, inject, Injector, input, viewChild } from '@angular/core';
+import { CREATE_COMPONENT_FN } from '../../../../utils/tokens/create-component-fn.token';
+import { EToolbarPanelHeaderType, ToolbarComponent } from '../../../toolbar/toolbar.component';
+import { BaseDrawer } from '../base-drawer.directive';
+import * as i0 from "@angular/core";
+/**
+ * @deprecated Use new layout components as GlobalPanel, Panel, PopUp and Snackbar
+ * This will be removed in the next major version.
+ */
+export class DrawerComponent extends BaseDrawer {
+    constructor() {
+        super();
+        this._createComponentFn = inject(CREATE_COMPONENT_FN);
+        this._injector = inject(Injector);
+        this.title = input.required();
+        this.contentCmp = input.required();
+        this.contentProps = input({});
+        this.contentHost = viewChild('contentHost');
+        this.cmp = computed(() => {
+            const host = this.contentHost()?.nativeElement;
+            if (host) {
+                return this._createComponentFn(this.contentCmp(), host, this.contentProps(), Injector.create({
+                    providers: [{
+                            provide: forwardRef(() => BaseDrawer),
+                            useValue: this
+                        }],
+                    parent: this._injector,
+                    name: 'DrawerContent injector'
+                }));
+            }
+            return;
+        });
+        this.toolbarActions = computed(() => (this.cmp()?.instance).toolbarActions() ?? []);
+        this.EToolbarPanelHeaderType = EToolbarPanelHeaderType;
+    }
+    close() {
+        this.onClose.emit(undefined);
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "17.3.12", ngImport: i0, type: DrawerComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.2.0", version: "17.3.12", type: DrawerComponent, isStandalone: true, selector: "ng-component", inputs: { title: { classPropertyName: "title", publicName: "title", isSignal: true, isRequired: true, transformFunction: null }, contentCmp: { classPropertyName: "contentCmp", publicName: "contentCmp", isSignal: true, isRequired: true, transformFunction: null }, contentProps: { classPropertyName: "contentProps", publicName: "contentProps", isSignal: true, isRequired: false, transformFunction: null } }, viewQueries: [{ propertyName: "contentHost", first: true, predicate: ["contentHost"], descendants: true, isSignal: true }], usesInheritance: true, ngImport: i0, template: "<admin-toolbar\n  (closeClicked)=\"close()\"\n  [actions]=\"toolbarActions()\"\n  [panelHeaderType]=\"EToolbarPanelHeaderType.PANEL\"\n  [title]=\"title()\"\n/>\n<div class=\"content\" #contentHost></div>\n", styles: [":host{display:grid;background-color:#f4f4f4;grid-template-rows:auto 1fr;overflow:hidden}.content{overflow:auto}\n"], dependencies: [{ kind: "component", type: ToolbarComponent, selector: "admin-toolbar", inputs: ["panelHeaderType", "title", "tooltipButton", "logoImgUrl", "isLoading", "breadcrumbs", "routerLink", "mode", "hasBorder", "actions", "extraActions"], outputs: ["buttonClicked", "menuButtonClicked", "optionEllipsisClicked", "closeClicked"] }] }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "17.3.12", ngImport: i0, type: DrawerComponent, decorators: [{
+            type: Component,
+            args: [{ imports: [ToolbarComponent, NgComponentOutlet], standalone: true, template: "<admin-toolbar\n  (closeClicked)=\"close()\"\n  [actions]=\"toolbarActions()\"\n  [panelHeaderType]=\"EToolbarPanelHeaderType.PANEL\"\n  [title]=\"title()\"\n/>\n<div class=\"content\" #contentHost></div>\n", styles: [":host{display:grid;background-color:#f4f4f4;grid-template-rows:auto 1fr;overflow:hidden}.content{overflow:auto}\n"] }]
+        }], ctorParameters: () => [] });
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZHJhd2VyLmNvbXBvbmVudC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uLy4uLy4uLy4uL3Byb2plY3RzL2FkbWluLWNvbXBvbmVudHMvc3JjL2xpYi9sYXlvdXQvZGlhbG9ncy9jb21wb25lbnRzL2RyYXdlci9kcmF3ZXIuY29tcG9uZW50LnRzIiwiLi4vLi4vLi4vLi4vLi4vLi4vLi4vLi4vcHJvamVjdHMvYWRtaW4tY29tcG9uZW50cy9zcmMvbGliL2xheW91dC9kaWFsb2dzL2NvbXBvbmVudHMvZHJhd2VyL2RyYXdlci5jb21wb25lbnQuaHRtbCJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxPQUFPLEVBQUUsaUJBQWlCLEVBQUUsTUFBTSxpQkFBaUIsQ0FBQztBQUNwRCxPQUFPLEVBQUUsU0FBUyxFQUFFLFFBQVEsRUFBYyxVQUFVLEVBQUUsTUFBTSxFQUFFLFFBQVEsRUFBRSxLQUFLLEVBQVEsU0FBUyxFQUFFLE1BQU0sZUFBZSxDQUFDO0FBQ3RILE9BQU8sRUFBRSxtQkFBbUIsRUFBRSxNQUFNLG9EQUFvRCxDQUFDO0FBQ3pGLE9BQU8sRUFBRSx1QkFBdUIsRUFBRSxnQkFBZ0IsRUFBRSxNQUFNLG9DQUFvQyxDQUFDO0FBRy9GLE9BQU8sRUFBRSxVQUFVLEVBQUUsTUFBTSwwQkFBMEIsQ0FBQzs7QUFFdEQ7OztHQUdHO0FBT0gsTUFBTSxPQUFPLGVBQStFLFNBQVEsVUFBa0I7SUF1QnBIO1FBQ0UsS0FBSyxFQUFFLENBQUM7UUF2Qk8sdUJBQWtCLEdBQUcsTUFBTSxDQUFDLG1CQUFtQixDQUFDLENBQUM7UUFDL0MsY0FBUyxHQUFHLE1BQU0sQ0FBQyxRQUFRLENBQUMsQ0FBQztRQUNoRCxVQUFLLEdBQUcsS0FBSyxDQUFDLFFBQVEsRUFBVSxDQUFDO1FBQ2pDLGVBQVUsR0FBRyxLQUFLLENBQUMsUUFBUSxFQUFtQixDQUFDO1FBQy9DLGlCQUFZLEdBQUcsS0FBSyxDQUFrQyxFQUFFLENBQUMsQ0FBQztRQUMxRCxnQkFBVyxHQUFHLFNBQVMsQ0FBMEIsYUFBYSxDQUFDLENBQUM7UUFDaEUsUUFBRyxHQUFHLFFBQVEsQ0FBQyxHQUFHLEVBQUU7WUFDbEIsTUFBTSxJQUFJLEdBQUcsSUFBSSxDQUFDLFdBQVcsRUFBRSxFQUFFLGFBQWEsQ0FBQztZQUMvQyxJQUFJLElBQUksRUFBRSxDQUFDO2dCQUNULE9BQU8sSUFBSSxDQUFDLGtCQUFrQixDQUFDLElBQUksQ0FBQyxVQUFVLEVBQUUsRUFBRSxJQUFJLEVBQUUsSUFBSSxDQUFDLFlBQVksRUFBRSxFQUFFLFFBQVEsQ0FBQyxNQUFNLENBQUM7b0JBQzNGLFNBQVMsRUFBRSxDQUFDOzRCQUNWLE9BQU8sRUFBRSxVQUFVLENBQUMsR0FBRyxFQUFFLENBQUMsVUFBVSxDQUFDOzRCQUNyQyxRQUFRLEVBQUUsSUFBSTt5QkFDZixDQUFDO29CQUNGLE1BQU0sRUFBRSxJQUFJLENBQUMsU0FBUztvQkFDdEIsSUFBSSxFQUFFLHdCQUF3QjtpQkFDL0IsQ0FBQyxDQUFDLENBQUM7WUFDTixDQUFDO1lBQ0QsT0FBTztRQUNULENBQUMsQ0FBQyxDQUFDO1FBQ0gsbUJBQWMsR0FBRyxRQUFRLENBQUMsR0FBRyxFQUFFLENBQUMsQ0FBQyxJQUFJLENBQUMsR0FBRyxFQUFFLEVBQUUsUUFBc0MsQ0FBQSxDQUFDLGNBQWMsRUFBRSxJQUFJLEVBQUUsQ0FBQyxDQUFDO1FBQzVHLDRCQUF1QixHQUFHLHVCQUF1QixDQUFDO0lBR2xELENBQUM7SUFFRCxLQUFLO1FBQ0gsSUFBSSxDQUFDLE9BQU8sQ0FBQyxJQUFJLENBQUMsU0FBbUIsQ0FBQyxDQUFBO0lBQ3hDLENBQUM7K0dBN0JVLGVBQWU7bUdBQWYsZUFBZSxpbkJDbEI1QixnTkFPQSwyS0RNWSxnQkFBZ0I7OzRGQUtmLGVBQWU7a0JBTjNCLFNBQVM7OEJBQ0MsQ0FBQyxnQkFBZ0IsRUFBRSxpQkFBaUIsQ0FBQyxjQUNsQyxJQUFJIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgTmdDb21wb25lbnRPdXRsZXQgfSBmcm9tICdAYW5ndWxhci9jb21tb24nO1xuaW1wb3J0IHsgQ29tcG9uZW50LCBjb21wdXRlZCwgRWxlbWVudFJlZiwgZm9yd2FyZFJlZiwgaW5qZWN0LCBJbmplY3RvciwgaW5wdXQsIFR5cGUsIHZpZXdDaGlsZCB9IGZyb20gJ0Bhbmd1bGFyL2NvcmUnO1xuaW1wb3J0IHsgQ1JFQVRFX0NPTVBPTkVOVF9GTiB9IGZyb20gJy4uLy4uLy4uLy4uL3V0aWxzL3Rva2Vucy9jcmVhdGUtY29tcG9uZW50LWZuLnRva2VuJztcbmltcG9ydCB7IEVUb29sYmFyUGFuZWxIZWFkZXJUeXBlLCBUb29sYmFyQ29tcG9uZW50IH0gZnJvbSAnLi4vLi4vLi4vdG9vbGJhci90b29sYmFyLmNvbXBvbmVudCc7XG5pbXBvcnQgeyBEaWFsb2dQcm9wcyB9IGZyb20gJy4uLy4uL3R5cGVzL2RpYWxvZy1wcm9wcy50eXBlJztcbmltcG9ydCB7IEJhc2VEcmF3ZXJDb250ZW50IH0gZnJvbSAnLi4vYmFzZS1kcmF3ZXItY29udGVudC5kaXJlY3RpdmUnO1xuaW1wb3J0IHsgQmFzZURyYXdlciB9IGZyb20gJy4uL2Jhc2UtZHJhd2VyLmRpcmVjdGl2ZSc7XG5cbi8qKlxuICogQGRlcHJlY2F0ZWQgVXNlIG5ldyBsYXlvdXQgY29tcG9uZW50cyBhcyBHbG9iYWxQYW5lbCwgUGFuZWwsIFBvcFVwIGFuZCBTbmFja2JhclxuICogVGhpcyB3aWxsIGJlIHJlbW92ZWQgaW4gdGhlIG5leHQgbWFqb3IgdmVyc2lvbi5cbiAqL1xuQENvbXBvbmVudCh7XG4gIGltcG9ydHM6IFtUb29sYmFyQ29tcG9uZW50LCBOZ0NvbXBvbmVudE91dGxldF0sXG4gIHN0YW5kYWxvbmU6IHRydWUsXG4gIHN0eWxlVXJsOiAnLi9kcmF3ZXIuY29tcG9uZW50LnNjc3MnLFxuICB0ZW1wbGF0ZVVybDogJy4vZHJhd2VyLmNvbXBvbmVudC5odG1sJyxcbn0pXG5leHBvcnQgY2xhc3MgRHJhd2VyQ29tcG9uZW50PENvbXBvbmVudCBleHRlbmRzIEJhc2VEcmF3ZXJDb250ZW50PFJldHVybj4sIFJldHVybiA9IHVua25vd24+IGV4dGVuZHMgQmFzZURyYXdlcjxSZXR1cm4+IHtcbiAgcHJpdmF0ZSByZWFkb25seSBfY3JlYXRlQ29tcG9uZW50Rm4gPSBpbmplY3QoQ1JFQVRFX0NPTVBPTkVOVF9GTik7XG4gIHByb3RlY3RlZCByZWFkb25seSBfaW5qZWN0b3IgPSBpbmplY3QoSW5qZWN0b3IpO1xuICB0aXRsZSA9IGlucHV0LnJlcXVpcmVkPHN0cmluZz4oKTtcbiAgY29udGVudENtcCA9IGlucHV0LnJlcXVpcmVkPFR5cGU8Q29tcG9uZW50Pj4oKTtcbiAgY29udGVudFByb3BzID0gaW5wdXQ8UGFydGlhbDxEaWFsb2dQcm9wczxDb21wb25lbnQ+Pj4oe30pO1xuICBjb250ZW50SG9zdCA9IHZpZXdDaGlsZDxFbGVtZW50UmVmPEhUTUxFbGVtZW50Pj4oJ2NvbnRlbnRIb3N0Jyk7XG4gIGNtcCA9IGNvbXB1dGVkKCgpID0+IHtcbiAgICBjb25zdCBob3N0ID0gdGhpcy5jb250ZW50SG9zdCgpPy5uYXRpdmVFbGVtZW50O1xuICAgIGlmIChob3N0KSB7XG4gICAgICByZXR1cm4gdGhpcy5fY3JlYXRlQ29tcG9uZW50Rm4odGhpcy5jb250ZW50Q21wKCksIGhvc3QsIHRoaXMuY29udGVudFByb3BzKCksIEluamVjdG9yLmNyZWF0ZSh7XG4gICAgICAgIHByb3ZpZGVyczogW3tcbiAgICAgICAgICBwcm92aWRlOiBmb3J3YXJkUmVmKCgpID0+IEJhc2VEcmF3ZXIpLFxuICAgICAgICAgIHVzZVZhbHVlOiB0aGlzXG4gICAgICAgIH1dLFxuICAgICAgICBwYXJlbnQ6IHRoaXMuX2luamVjdG9yLFxuICAgICAgICBuYW1lOiAnRHJhd2VyQ29udGVudCBpbmplY3RvcidcbiAgICAgIH0pKTtcbiAgICB9XG4gICAgcmV0dXJuO1xuICB9KTtcbiAgdG9vbGJhckFjdGlvbnMgPSBjb21wdXRlZCgoKSA9PiAodGhpcy5jbXAoKT8uaW5zdGFuY2UgYXMgQmFzZURyYXdlckNvbnRlbnQ8UmV0dXJuPikudG9vbGJhckFjdGlvbnMoKSA/PyBbXSk7XG4gIEVUb29sYmFyUGFuZWxIZWFkZXJUeXBlID0gRVRvb2xiYXJQYW5lbEhlYWRlclR5cGU7XG4gIGNvbnN0cnVjdG9yKCkge1xuICAgIHN1cGVyKCk7XG4gIH1cblxuICBjbG9zZSgpIHtcbiAgICB0aGlzLm9uQ2xvc2UuZW1pdCh1bmRlZmluZWQgYXMgUmV0dXJuKVxuICB9XG59XG4iLCI8YWRtaW4tdG9vbGJhclxuICAoY2xvc2VDbGlja2VkKT1cImNsb3NlKClcIlxuICBbYWN0aW9uc109XCJ0b29sYmFyQWN0aW9ucygpXCJcbiAgW3BhbmVsSGVhZGVyVHlwZV09XCJFVG9vbGJhclBhbmVsSGVhZGVyVHlwZS5QQU5FTFwiXG4gIFt0aXRsZV09XCJ0aXRsZSgpXCJcbi8+XG48ZGl2IGNsYXNzPVwiY29udGVudFwiICNjb250ZW50SG9zdD48L2Rpdj5cbiJdfQ==

@@ -1,0 +1,114 @@
+@use '@angular/material' as mat;
+@use '../_config/variables' as vars;
+@use '../_config/palettes' as palettes;
+
+@mixin text-h1 {
+	color: mat.get-color-from-palette(palettes.$md-gray, 900);
+	font-family: "RobotoMedium", sans-serif;
+	font-size: 24px;
+	font-style: normal;
+	font-weight: normal;
+	letter-spacing: 0.1px;
+	line-height: 32px;
+	margin: 0;
+}
+
+@mixin text-h2 {
+	color: mat.get-color-from-palette(palettes.$md-gray, 900);
+	font-family: "RobotoMedium", sans-serif;
+	font-size: 20px;
+	font-style: normal;
+	font-weight: normal;
+	letter-spacing: 0.1px;
+	line-height: 26px;
+	margin: 0;
+}
+
+@mixin text-h3 {
+	color: mat.get-color-from-palette(palettes.$md-gray, 900);
+	font-family: "RobotoMedium", sans-serif;
+	font-size: 18px;
+	font-style: normal;
+	font-weight: normal;
+	letter-spacing: 0.1px;
+	line-height: 24px;
+	margin: 0;
+}
+
+@mixin text-h4 {
+	color: mat.get-color-from-palette(palettes.$md-gray, 900);
+	font-family: "RobotoMedium", sans-serif;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: normal;
+	letter-spacing: 0.1px;
+	line-height: 20px;
+	margin: 0;
+}
+
+@mixin text-label {
+	font-family: "RobotoRegular", sans-serif;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: normal;
+	line-height: normal;
+	margin: 0;
+}
+
+@mixin text-label-bold {
+	font-family: "RobotoBold", sans-serif;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: normal;
+	line-height: normal;
+	margin: 0;
+}
+
+@mixin text-p {
+	color: vars.$text-low;
+	font-family: "RobotoRegular", sans-serif;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: normal;
+	line-height: 20px;
+	margin: 0;
+}
+
+@mixin text-p-bold {
+	color: vars.$text-low;
+	font-family: "RobotoBold", sans-serif;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: normal;
+	line-height: 20px;
+	margin: 0;
+}
+
+@mixin text-buttonLabel {
+	font-family: "RobotoMedium", sans-serif;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: normal;
+	letter-spacing: 1.25px;
+	margin: 0;
+}
+
+@mixin text-caption {
+	color: mat.get-color-from-palette(palettes.$md-gray, 900);
+	font-family: "RobotoMedium", sans-serif;
+	font-size: 12px;
+	font-style: normal;
+	font-weight: normal;
+	line-height: 16px;
+	margin: 0;
+}
+
+@mixin text-button {
+	color: mat.get-color-from-palette(palettes.$md-gray, 900);
+	font-family: "RobotoBold", sans-serif;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: normal;
+	line-height: 20px;
+	margin: 0;
+}

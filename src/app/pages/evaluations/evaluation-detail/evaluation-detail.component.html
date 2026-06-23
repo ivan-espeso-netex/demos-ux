@@ -1,0 +1,174 @@
+<ng-container *ngIf="evaluation">
+  <!-- Hero section -->
+  <div class="detail-hero">
+    <div class="detail-hero__top">
+      <div class="detail-hero__progress">
+        <admin-circular-progress-bar
+          [id]="'eval-progress'"
+          [value]="evaluation.progress || 0"
+          [color]="ECircularProgressBarColor.SUCCESS">
+        </admin-circular-progress-bar>
+      </div>
+
+      <div class="detail-hero__info">
+        <div class="detail-hero__title-row">
+          <admin-label [text]="evaluation.status" [color]="ELabelColor.BLACK"></admin-label>
+        </div>
+        <div class="detail-hero__name-row">
+          <h1 class="detail-hero__name">{{ evaluation.name }}</h1>
+          <button mat-icon-button [matMenuTriggerFor]="evalMenu" class="detail-hero__menu-btn">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #evalMenu="matMenu">
+            <button mat-menu-item *ngIf="evaluation.status === 'DRAFT' || evaluation.status === 'PENDING'" (click)="onLaunch()">
+              <mat-icon>play_arrow</mat-icon>
+              Launch evaluation
+            </button>
+            <button mat-menu-item *ngIf="evaluation.status === 'IN PROGRESS'" (click)="onClose()">
+              <mat-icon>stop_circle</mat-icon>
+              Close evaluation
+            </button>
+            <button mat-menu-item (click)="onEdit()">
+              <mat-icon>edit</mat-icon>
+              Edit details
+            </button>
+            <button mat-menu-item (click)="onDelete()">
+              <mat-icon>delete</mat-icon>
+              Delete
+            </button>
+          </mat-menu>
+        </div>
+        <p class="detail-hero__type">Evaluation type: <strong>{{ evaluation.evaluationTypeName }}</strong></p>
+      </div>
+    </div>
+
+    <div class="detail-hero__stats">
+      <admin-kpi-card
+        [id]="'days-left'"
+        [title]="'Days left'"
+        [subtitle]="'-'"
+        [icon]="EIconName.CALENDAR_TODAY"
+        [color]="EKpiCardColor.WHITE"
+        [iconColor]="EIconColor.ACCENT">
+      </admin-kpi-card>
+
+      <admin-kpi-card
+        [id]="'users-pending'"
+        [title]="'Users pending evaluation'"
+        [subtitle]="'-'"
+        [icon]="EIconName.PEOPLE"
+        [color]="EKpiCardColor.WARN"
+        [iconColor]="EIconColor.WHITE">
+      </admin-kpi-card>
+
+      <admin-kpi-card
+        [id]="'assessed-users'"
+        [title]="'Assessed users'"
+        [subtitle]="'-'"
+        [icon]="EIconName.PEOPLE"
+        [color]="EKpiCardColor.ACCENT"
+        [iconColor]="EIconColor.WHITE">
+      </admin-kpi-card>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <admin-tabs
+    [links]="tabs"
+    [selectedIndex]="selectedTabIndex"
+    (linkClicked)="onTabClicked($event)">
+  </admin-tabs>
+
+  <!-- Tab content: Evaluation details -->
+  <div class="detail-content" *ngIf="selectedTabIndex === 0">
+    <div class="detail-section-header">
+      <span class="detail-section-header__title">Details</span>
+      <admin-button
+        text="Edit"
+        [buttonType]="EButtonButtonType.MATFLATBUTTON"
+        [color]="EButtonColor.ACCENT"
+        [leftIcon]="EIconName.EDIT"
+        (buttonClicked)="onEdit()">
+      </admin-button>
+    </div>
+
+    <div class="detail-group">
+      <div class="detail-group__label">Basic info</div>
+      <div class="detail-group__content">
+        <div class="detail-field">
+          <span class="detail-field__name">Name</span>
+          <span class="detail-field__value">{{ evaluation.name }}</span>
+        </div>
+        <div class="detail-field">
+          <span class="detail-field__name">Type</span>
+          <span class="detail-field__value">{{ evaluation.evaluationTypeName }}</span>
+        </div>
+        <div class="detail-field">
+          <span class="detail-field__name">Evaluator</span>
+          <span class="detail-field__value">{{ evaluation.evaluator }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-divider"></div>
+
+    <div class="detail-group">
+      <div class="detail-group__label">Dates</div>
+      <div class="detail-group__content">
+        <div class="detail-field">
+          <span class="detail-field__name">Start date</span>
+          <span class="detail-field__value">{{ evaluation.startDate }}</span>
+        </div>
+        <div class="detail-field">
+          <span class="detail-field__name">End date</span>
+          <span class="detail-field__value">{{ evaluation.endDate }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-divider"></div>
+
+    <div class="detail-group">
+      <div class="detail-group__label">Notifications</div>
+      <div class="detail-group__content">
+        <div class="detail-field">
+          <span class="detail-field__name">Notify the evaluator that they have a new pending evaluation.</span>
+          <span class="detail-field__value">{{ notifyEvaluatorText }}</span>
+        </div>
+        <div class="detail-field">
+          <span class="detail-field__name">Notify the user that they have been evaluated.</span>
+          <span class="detail-field__value">{{ notifyUserText }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab content: Target users -->
+  <div class="detail-content detail-content--tab" *ngIf="selectedTabIndex === 1">
+    <app-target-users-tab
+      [evaluationId]="evaluationId"
+      [evaluation]="evaluation">
+    </app-target-users-tab>
+  </div>
+
+  <!-- Tab content: Evaluators -->
+  <div class="detail-content detail-content--tab" *ngIf="selectedTabIndex === 2">
+    <app-evaluators-tab
+      [evaluationId]="evaluationId"
+      [evaluation]="evaluation">
+    </app-evaluators-tab>
+  </div>
+
+  <!-- Tab content: Assessment -->
+  <div class="detail-content detail-content--tab" *ngIf="selectedTabIndex === 3">
+    <app-assessment-tab
+      [evaluationId]="evaluationId"
+      [evaluation]="evaluation">
+    </app-assessment-tab>
+  </div>
+</ng-container>
+
+<div class="detail-content detail-content--empty" *ngIf="!evaluation">
+  <p>Evaluation not found.</p>
+</div>
+

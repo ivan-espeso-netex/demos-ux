@@ -1,0 +1,24 @@
+import { Component, Input } from '@angular/core';
+import * as i0 from "@angular/core";
+export var EDividerMode;
+(function (EDividerMode) {
+    EDividerMode["LIGHT"] = "light";
+    EDividerMode["DARK"] = "dark";
+})(EDividerMode || (EDividerMode = {}));
+export class DividerComponent {
+    constructor() {
+        this.text = '';
+        this.mode = EDividerMode.LIGHT;
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "17.3.12", ngImport: i0, type: DividerComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "17.3.12", type: DividerComponent, isStandalone: true, selector: "admin-divider", inputs: { text: "text", mode: "mode" }, ngImport: i0, template: "<div class=\"admin-divider {{mode}}\">\n    <div class=\"admin-divider--line\"></div>\n    @if (text) {\n        <span class=\"admin-divider--text\">{{text}}</span>\n        <div class=\"admin-divider--line\"></div>\n    }\n</div>\n", styles: [".admin-divider{align-items:center;display:flex;flex-direction:row;gap:16px}.admin-divider .admin-divider--line{background-color:var(--divider-line-background-color);height:1px;margin:8px 0;width:100%}.admin-divider .admin-divider--text{font-family:RobotoRegular,sans-serif;font-size:14px;font-style:normal;font-weight:400;line-height:normal;margin:0;color:var(--divider-text-color);white-space:nowrap}.admin-divider.light{--divider-line-background-color: #d4d4d4;--divider-text-color: #999999}.admin-divider.dark{--divider-line-background-color: #3e3e3e;--divider-text-color: #999999}\n"] }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "17.3.12", ngImport: i0, type: DividerComponent, decorators: [{
+            type: Component,
+            args: [{ selector: 'admin-divider', standalone: true, imports: [], template: "<div class=\"admin-divider {{mode}}\">\n    <div class=\"admin-divider--line\"></div>\n    @if (text) {\n        <span class=\"admin-divider--text\">{{text}}</span>\n        <div class=\"admin-divider--line\"></div>\n    }\n</div>\n", styles: [".admin-divider{align-items:center;display:flex;flex-direction:row;gap:16px}.admin-divider .admin-divider--line{background-color:var(--divider-line-background-color);height:1px;margin:8px 0;width:100%}.admin-divider .admin-divider--text{font-family:RobotoRegular,sans-serif;font-size:14px;font-style:normal;font-weight:400;line-height:normal;margin:0;color:var(--divider-text-color);white-space:nowrap}.admin-divider.light{--divider-line-background-color: #d4d4d4;--divider-text-color: #999999}.admin-divider.dark{--divider-line-background-color: #3e3e3e;--divider-text-color: #999999}\n"] }]
+        }], propDecorators: { text: [{
+                type: Input
+            }], mode: [{
+                type: Input
+            }] } });
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZGl2aWRlci5jb21wb25lbnQuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi8uLi8uLi9wcm9qZWN0cy9hZG1pbi1jb21wb25lbnRzL3NyYy9saWIvYXRvbXMvZGl2aWRlci9kaXZpZGVyLmNvbXBvbmVudC50cyIsIi4uLy4uLy4uLy4uLy4uLy4uL3Byb2plY3RzL2FkbWluLWNvbXBvbmVudHMvc3JjL2xpYi9hdG9tcy9kaXZpZGVyL2RpdmlkZXIuY29tcG9uZW50Lmh0bWwiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsT0FBTyxFQUFFLFNBQVMsRUFBRSxLQUFLLEVBQUUsTUFBTSxlQUFlLENBQUM7O0FBRWpELE1BQU0sQ0FBTixJQUFZLFlBR1g7QUFIRCxXQUFZLFlBQVk7SUFDdkIsK0JBQWUsQ0FBQTtJQUNmLDZCQUFhLENBQUE7QUFDZCxDQUFDLEVBSFcsWUFBWSxLQUFaLFlBQVksUUFHdkI7QUFTRCxNQUFNLE9BQU8sZ0JBQWdCO0lBUDdCO1FBUVUsU0FBSSxHQUFXLEVBQUUsQ0FBQztRQUNsQixTQUFJLEdBQUcsWUFBWSxDQUFDLEtBQUssQ0FBQztLQUNuQzsrR0FIWSxnQkFBZ0I7bUdBQWhCLGdCQUFnQixpSENkN0IsME9BT0E7OzRGRE9hLGdCQUFnQjtrQkFQNUIsU0FBUzsrQkFDQyxlQUFlLGNBQ2IsSUFBSSxXQUNQLEVBQUU7OEJBS0YsSUFBSTtzQkFBWixLQUFLO2dCQUNHLElBQUk7c0JBQVosS0FBSyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IENvbXBvbmVudCwgSW5wdXQgfSBmcm9tICdAYW5ndWxhci9jb3JlJztcblxuZXhwb3J0IGVudW0gRURpdmlkZXJNb2RlIHtcblx0TElHSFQgPSAnbGlnaHQnLFxuXHREQVJLID0gJ2RhcmsnXG59XG5cbkBDb21wb25lbnQoe1xuXHRzZWxlY3RvcjogJ2FkbWluLWRpdmlkZXInLFxuXHRzdGFuZGFsb25lOiB0cnVlLFxuXHRpbXBvcnRzOiBbXSxcblx0dGVtcGxhdGVVcmw6ICcuL2RpdmlkZXIuY29tcG9uZW50Lmh0bWwnLFxuXHRzdHlsZVVybDogJy4vZGl2aWRlci5jb21wb25lbnQuc2Nzcydcbn0pXG5leHBvcnQgY2xhc3MgRGl2aWRlckNvbXBvbmVudCB7XG5cdEBJbnB1dCgpIHRleHQ6IHN0cmluZyA9ICcnO1xuXHRASW5wdXQoKSBtb2RlID0gRURpdmlkZXJNb2RlLkxJR0hUO1xufVxuIiwiPGRpdiBjbGFzcz1cImFkbWluLWRpdmlkZXIge3ttb2RlfX1cIj5cbiAgICA8ZGl2IGNsYXNzPVwiYWRtaW4tZGl2aWRlci0tbGluZVwiPjwvZGl2PlxuICAgIEBpZiAodGV4dCkge1xuICAgICAgICA8c3BhbiBjbGFzcz1cImFkbWluLWRpdmlkZXItLXRleHRcIj57e3RleHR9fTwvc3Bhbj5cbiAgICAgICAgPGRpdiBjbGFzcz1cImFkbWluLWRpdmlkZXItLWxpbmVcIj48L2Rpdj5cbiAgICB9XG48L2Rpdj5cbiJdfQ==

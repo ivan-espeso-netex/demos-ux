@@ -1,0 +1,46 @@
+// Roboto font
+@font-face {
+  font-family: 'RobotoRegular';
+  src: local('RobotoRegular'),
+    local('Roboto-Regular'),
+    url('./fonts/roboto/Roboto-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'RobotoMedium';
+  src: local('RobotoMedium'),
+    local('Roboto-Medium'),
+    url('./fonts/roboto/Roboto-Medium.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'RobotoBold';
+  src: local('RobotoBold'),
+    local('Roboto-Bold'),
+    url('./fonts/roboto/Roboto-Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'RobotoBlack';
+  src: local('RobotoBlack'),
+    local('Roboto-Black'),
+    url('./fonts/roboto/Roboto-Black.ttf') format('truetype');
+}
+
+// Utility classes for the fonts
+.roboto-regular {
+  font-family: "RobotoRegular", sans-serif;
+  font-style: normal;
+}
+
+.roboto-medium {
+  font-family: "RobotoMedium", sans-serif;
+  font-style: normal;
+}
+
+.roboto-bold {
+	font-family: "RobotoBold", sans-serif;
+	font-style: normal;
+}
+
+.roboto-black {
+	font-family: "RobotoBlack", sans-serif;
+	font-style: normal;
+}

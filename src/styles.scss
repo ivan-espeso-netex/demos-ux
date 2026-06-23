@@ -1,0 +1,28 @@
+@use '@netexknowledge/ux-admin-components/styles' as *;
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  font-family: 'RobotoRegular', sans-serif;
+  background-color: #f5f5f5;
+}
+
+// Logo clickable -> navega al home
+.admin-toolbar__header--logo {
+  cursor: pointer;
+}
+
+// Override toolbar logo to show full-width SVG logo
+.admin-toolbar__header--logo-img {
+  width: 160px !important;
+  min-width: 160px !important;
+
+  img {
+    object-fit: contain !important;
+  }
+}

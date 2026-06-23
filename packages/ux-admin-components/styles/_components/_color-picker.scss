@@ -1,0 +1,61 @@
+@use '../_config/variables' as vars;
+
+.admin-color-picker-overlay {
+  font-family: "RobotoRegular", sans-serif;
+
+  .opened {
+    border-radius: 8px !important;
+    
+    .nav-wrapper {
+      margin: 16px !important;
+      button {
+        color: vars.$basic-accent-button-label !important;
+      }
+    }
+
+    .color-wrapper {
+      margin: 4px 16px !important;
+    }
+
+    .manual-input-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      
+      div {
+        flex: 1;
+      }
+      
+      p {
+        width: 92px !important;
+      }
+    }
+
+    .manual-input-wrapper > p:first-child {
+      font-size: 12px !important;
+      &::after {
+        font-size: 32px !important;
+        content: "\1F893";
+        display: inline-block;
+        position: relative;
+        top: 17px !important;
+      }
+    }
+
+    .manual-input-wrapper .g-input {
+      border-radius: 4px !important;
+      border: 1px solid vars.$border !important;
+      input {
+        font-size: 12px !important;
+      }
+    }
+  }
+
+  .color-picker .box {
+    padding: 8px 0 !important;
+  }
+
+  .color-picker .saturation-lightness {
+    border-radius: 8px !important;
+  }
+}

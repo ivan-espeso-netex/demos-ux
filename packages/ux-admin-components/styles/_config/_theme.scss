@@ -1,0 +1,25 @@
+@use '@angular/material' as mat;
+@use 'palettes' as palettes;
+
+// Include the common styles for Angular Material
+@include mat.core();
+
+// Define palettes
+$admin-frontend-primary: mat.define-palette(palettes.$md-primary, 500, A100, A400);
+$admin-frontend-accent: mat.define-palette(palettes.$md-accent, 500, A100, A400);
+$admin-frontend-warn: mat.define-palette(palettes.$md-warn, 500, A100, A400);
+$admin-frontend-success: mat.define-palette(palettes.$md-success, 500, A100, A400);
+
+// Create the theme
+$admin-frontend-theme: mat.define-light-theme((
+  color: (
+    primary: $admin-frontend-primary,
+    accent: $admin-frontend-accent,
+    warn: $admin-frontend-warn,
+  ),
+  typography: mat.define-typography-config(),
+  density: 0
+));
+
+// Include theme styles
+@include mat.all-component-themes($admin-frontend-theme);

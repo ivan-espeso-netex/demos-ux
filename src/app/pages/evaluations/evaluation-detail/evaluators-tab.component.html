@@ -1,0 +1,42 @@
+<div class="evaluators-tab">
+
+  <!-- Empty state -->
+  <div class="evaluators-empty" *ngIf="evaluators.length === 0">
+    <admin-no-content-placeholders
+      title="You haven't added any evaluators yet"
+      description="Go to Target users to assign evaluators to each user"
+      [imgEntity]="ImgEntityType.PLACEHOLDER_NO_USERS">
+    </admin-no-content-placeholders>
+  </div>
+
+  <!-- Table state -->
+  <div class="evaluators-content" *ngIf="evaluators.length > 0">
+    <div class="evaluators-toolbar">
+      <admin-searchbox
+        placeholder="Search"
+        [(value)]="searchValue">
+      </admin-searchbox>
+    </div>
+
+    <!-- (click) en el wrapper: se registra dentro de la zona de Angular, a diferencia
+         de los clics de las celdas dinámicas de admin-table. Delegamos por fila. -->
+    <div class="evaluators-table" (click)="onRowClick($event)">
+      <admin-table
+        [columnDefinition]="columnDefinition"
+        [rowData]="filteredEvaluators"
+        [selectable]="false"
+        status="loaded-data">
+      </admin-table>
+    </div>
+  </div>
+
+</div>
+
+<!-- Evaluator users panel (alojado aquí, como el detail panel en target-users-tab) -->
+<app-evaluator-users-panel
+  *ngIf="showUsersPanel && panelEvaluator"
+  [evaluationId]="evaluationId"
+  [evaluator]="panelEvaluator"
+  [evaluation]="evaluation"
+  (closed)="closeUsersPanel()">
+</app-evaluator-users-panel>

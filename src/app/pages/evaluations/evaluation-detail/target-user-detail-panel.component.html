@@ -1,0 +1,127 @@
+<div class="page">
+  <div class="panel-body">
+    <!-- Hero -->
+    <div class="user-hero">
+      <div class="user-hero__avatar" [style.background-color]="avatarColor">
+        {{ initials }}
+      </div>
+      <div class="user-hero__info">
+        <admin-label *ngIf="targetUser?.jobRole" [text]="targetUser!.jobRole" [color]="ELabelColor.ACCENT"></admin-label>
+        <h2 class="user-hero__name">{{ targetUser?.name }}</h2>
+        <p class="user-hero__type">Evaluation type: <strong>{{ evaluationTypeName }}</strong></p>
+      </div>
+      <div class="user-hero__kpis">
+        <admin-kpi-card
+          id="eval-progress"
+          title="Evaluation progress"
+          [subtitle]="targetUser?.progress || 'NOT STARTED'"
+          [icon]="EIconName.PEOPLE"
+          [color]="EKpiCardColor.SUCCESS"
+          [iconColor]="EIconColor.WHITE">
+        </admin-kpi-card>
+        <admin-kpi-card
+          id="job-affinity"
+          title="Job affinity"
+          [subtitle]="targetUser?.jobAffinity || '-'"
+          [icon]="EIconName.PEOPLE"
+          [color]="EKpiCardColor.WHITE"
+          [iconColor]="EIconColor.ACCENT">
+        </admin-kpi-card>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <admin-tabs
+      [links]="tabs"
+      [selectedIndex]="selectedTabIndex"
+      (linkClicked)="onTabClicked($event)">
+    </admin-tabs>
+
+    <!-- Evaluators tab -->
+    <div class="panel-content" *ngIf="selectedTabIndex === 0">
+
+      <!-- Pre-launch: add evaluators view -->
+      <ng-container *ngIf="!isLaunched">
+        <ng-container *ngIf="evaluators.length > 0">
+          <div class="panel-filters">
+            <admin-button
+              text="Add evaluator"
+              [buttonType]="EButtonButtonType.MATFLATBUTTON"
+              [color]="EButtonColor.ACCENT"
+              [leftIcon]="EIconName.ADD"
+              (buttonClicked)="showAddEvaluatorPanel = true">
+            </admin-button>
+            <admin-searchbox placeholder="Search" [(value)]="searchValue"></admin-searchbox>
+          </div>
+          <admin-table
+            [columnDefinition]="columnDefinition"
+            [rowData]="filteredEvaluators"
+            status="loaded-data">
+          </admin-table>
+        </ng-container>
+        <admin-no-content-placeholders
+          *ngIf="evaluators.length === 0"
+          title="You haven't added any evaluators yet"
+          description="Add evaluators to start the evaluation process"
+          [imgEntity]="ImgEntityType.PLACEHOLDER_NO_USERS"
+          [menuButtonConfig]="addEvaluatorEmptyConfig"
+          (menuButtonClicked)="showAddEvaluatorPanel = true">
+        </admin-no-content-placeholders>
+      </ng-container>
+
+      <!-- Post-launch: results view -->
+      <ng-container *ngIf="isLaunched">
+        <ng-container *ngIf="launchedEvaluators.length > 0">
+          <div class="panel-filters">
+            <admin-searchbox placeholder="Search" [(value)]="searchValue"></admin-searchbox>
+          </div>
+          <admin-table
+            [columnDefinition]="launchedColumnDefinition"
+            [rowData]="filteredLaunchedEvaluators"
+            status="loaded-data">
+          </admin-table>
+        </ng-container>
+        <admin-no-content-placeholders
+          *ngIf="launchedEvaluators.length === 0"
+          title="No evaluators assigned"
+          description="No evaluators were assigned to this user"
+          [imgEntity]="ImgEntityType.PLACEHOLDER_NO_USERS">
+        </admin-no-content-placeholders>
+      </ng-container>
+    </div>
+
+    <!-- IDP tab -->
+    <app-idp-tab
+      *ngIf="selectedTabIndex === 2 && isLaunched"
+      [userId]="targetUser?.id ?? 0"
+      [userName]="targetUser?.name ?? ''">
+    </app-idp-tab>
+
+    <!-- Results tab -->
+    <div class="panel-content" *ngIf="selectedTabIndex === 1">
+      <ng-container *ngIf="isLaunched && skillResults.length > 0">
+        <div class="panel-filters">
+          <admin-searchbox placeholder="Search" [(value)]="searchValue"></admin-searchbox>
+        </div>
+        <admin-table
+          [columnDefinition]="skillsColumnDefinition"
+          [rowData]="skillResults"
+          status="loaded-data">
+        </admin-table>
+      </ng-container>
+      <admin-no-content-placeholders
+        *ngIf="!isLaunched || skillResults.length === 0"
+        title="No results available yet"
+        description="Results will appear here once evaluations are completed"
+        [imgEntity]="ImgEntityType.PLACEHOLDER_NO_CONTENT">
+      </admin-no-content-placeholders>
+    </div>
+  </div>
+</div>
+
+<app-add-evaluator-panel
+  *ngIf="showAddEvaluatorPanel"
+  [availableEvaluators]="availableForPanel"
+  (evaluatorsAdded)="onEvaluatorsAdded($event)"
+  (closed)="showAddEvaluatorPanel = false">
+</app-add-evaluator-panel>
