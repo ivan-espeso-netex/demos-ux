@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, Type } from '@angular/core';
+import { Component, Input, NgZone, Type } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   ButtonComponent,
@@ -87,7 +87,7 @@ export class AssessmentTabComponent {
   constructor(
     private assessmentsService: AssessmentsService,
     private targetUsersService: TargetUsersService,
-    private cdr: ChangeDetectorRef,
+    private zone: NgZone,
   ) {}
 
   get isLaunched(): boolean {
@@ -114,25 +114,27 @@ export class AssessmentTabComponent {
   }
 
   createAll(): void {
-    for (const row of this.assessments) {
-      if (row.status === 'PENDING') {
-        this.assessmentsService.create(this.evaluationId, row.id, 'Iván Espeso');
+    // El admin-button vive en una celda dinámica de admin-table y su clic corre
+    // FUERA de la zona de Angular: cdr.detectChanges no repinta la tabla de forma
+    // fiable. Re-entrar en la zona dispara un tick global que rebinda [rowData].
+    this.zone.run(() => {
+      for (const row of this.assessments) {
+        if (row.status === 'PENDING') {
+          this.assessmentsService.create(this.evaluationId, row.id, 'Iván Espeso');
+        }
       }
-    }
-    // El clic corre fuera de NgZone (celda de admin-table): forzar CD para repintar la tabla.
-    this.cdr.detectChanges();
+    });
   }
 
   handleAction(action: string, row: IAssessmentRow): void {
-    if (action === 'create' || action === 'import') {
-      this.assessmentsService.create(this.evaluationId, row.id, 'Iván Espeso');
-    } else if (action === 'quit') {
-      this.assessmentsService.quit(this.evaluationId, row.id);
-    } else if (action === 'link') {
-      // link another assessment — prototype no-op
-    }
-    // 'view' is no-op for now
-    // El clic corre fuera de NgZone (celda de admin-table): forzar CD para repintar la tabla.
-    this.cdr.detectChanges();
+    // Mismo motivo que createAll: el clic llega desde una celda fuera de NgZone.
+    this.zone.run(() => {
+      if (action === 'create' || action === 'import') {
+        this.assessmentsService.create(this.evaluationId, row.id, 'Iván Espeso');
+      } else if (action === 'quit') {
+        this.assessmentsService.quit(this.evaluationId, row.id);
+      }
+      // 'link' / 'view' son no-ops por ahora
+    });
   }
 }
