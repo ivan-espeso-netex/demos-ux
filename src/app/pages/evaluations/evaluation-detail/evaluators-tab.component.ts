@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, Type } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, Type } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   ButtonComponent,
@@ -11,7 +11,7 @@ import {
   IColumnDefinition,
   ImgEntityType,
 } from '@netexknowledge/ux-admin-components';
-import { EvaluatorsService, IAvailableEvaluator, IEvaluationEvaluator } from '../../../services/evaluators.service';
+import { EvaluatorsService, IEvaluationEvaluator } from '../../../services/evaluators.service';
 import { TargetUsersService } from '../../../services/target-users.service';
 import { IEvaluation } from '../../../services/evaluations.service';
 import { UserNameCellComponent } from '../components/user-name-cell.component';
@@ -32,7 +32,7 @@ import { EvaluatorUsersPanelComponent } from './evaluator-users-panel.component'
   templateUrl: './evaluators-tab.component.html',
   styleUrl: './evaluators-tab.component.scss',
 })
-export class EvaluatorsTabComponent {
+export class EvaluatorsTabComponent implements OnChanges {
   @Input() evaluationId = 0;
   @Input() evaluation: IEvaluation | undefined;
 
@@ -41,9 +41,18 @@ export class EvaluatorsTabComponent {
   readonly EIconName = EIconName;
   readonly ImgEntityType = ImgEntityType;
 
-  searchValue = '';
+  // Campo estable: evita el bucle de CD que causaba el getter
+  evaluators: IEvaluationEvaluator[] = [];
+  filteredEvaluators: IEvaluationEvaluator[] = [];
 
-  // Panel de usuarios del evaluador (alojado en este mismo componente, como en target-users-tab)
+  // Setter para actualizar filteredEvaluators cuando cambia el texto de búsqueda
+  private _searchValue = '';
+  get searchValue(): string { return this._searchValue; }
+  set searchValue(val: string) {
+    this._searchValue = val;
+    this._refreshFilteredEvaluators();
+  }
+
   showUsersPanel = false;
   panelEvaluator: IEvaluationEvaluator | null = null;
 
@@ -83,34 +92,37 @@ export class EvaluatorsTabComponent {
   constructor(
     private evaluatorsService: EvaluatorsService,
     private targetUsersService: TargetUsersService,
-    private cdr: ChangeDetectorRef,
   ) {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['evaluationId'] || changes['evaluation']) {
+      this._refreshEvaluators();
+    }
+  }
 
   get isLaunched(): boolean {
     const s = this.evaluation?.status;
     return s === 'IN PROGRESS' || s === 'CLOSED' || s === 'COMPLETED' || s === 'ENDING';
   }
 
-  get targetUserIds(): number[] {
+  private get targetUserIds(): number[] {
     return this.targetUsersService.getTargetUsers(this.evaluationId, this.isLaunched).map(u => u.id);
   }
 
-  get evaluators(): IEvaluationEvaluator[] {
-    return this.evaluatorsService.getEvaluatorsForEvaluation(this.evaluationId, this.targetUserIds);
+  private _refreshEvaluators(): void {
+    this.evaluators = this.evaluatorsService.getEvaluatorsForEvaluation(this.evaluationId, this.targetUserIds);
+    this._refreshFilteredEvaluators();
   }
 
-  get filteredEvaluators(): IEvaluationEvaluator[] {
-    if (!this.searchValue) return this.evaluators;
-    const term = this.searchValue.toLowerCase();
-    return this.evaluators.filter(e => e.name.toLowerCase().includes(term));
+  private _refreshFilteredEvaluators(): void {
+    if (!this._searchValue) {
+      this.filteredEvaluators = this.evaluators;
+    } else {
+      const term = this._searchValue.toLowerCase();
+      this.filteredEvaluators = this.evaluators.filter(e => e.name.toLowerCase().includes(term));
+    }
   }
 
-  /**
-   * Clic delegado a nivel de fila. El listener está en el template del tab (dentro
-   * de la zona de Angular), por lo que la detección de cambios SÍ se dispara y el
-   * panel se renderiza — a diferencia de los clics de las celdas dinámicas de
-   * admin-table, que corren fuera de zona.
-   */
   onRowClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
     const tr = target.closest('tr.mat-mdc-row');
@@ -126,9 +138,8 @@ export class EvaluatorsTabComponent {
   openUsersPanel(evaluator: IEvaluationEvaluator): void {
     this.panelEvaluator = evaluator;
     this.showUsersPanel = true;
-    // Forzamos CD síncrona: con clic de ratón la detección no se vacía sola
-    // (sí con tap / con DevTools abierto). detectChanges no depende de la zona.
-    this.cdr.detectChanges();
+    // No necesita detectChanges(): el clic burbujea al div wrapper que está
+    // dentro de la zona de Angular, así que la CD se dispara sola.
   }
 
   closeUsersPanel(): void {
