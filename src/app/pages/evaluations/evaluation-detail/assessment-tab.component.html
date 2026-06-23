@@ -11,6 +11,16 @@
 
   <!-- Assessment table -->
   <div class="assessment-content" *ngIf="jobRoles.length > 0">
+    <div class="assessment-toolbar">
+      <admin-button
+        [buttonType]="EButtonButtonType.MATFLATBUTTON"
+        [color]="EButtonColor.ACCENT"
+        [leftIcon]="EIconName.ADD"
+        [disabled]="!hasPending"
+        text="Create all"
+        (buttonClicked)="createAll()">
+      </admin-button>
+    </div>
     <admin-table
       [columnDefinition]="columnDefinition"
       [rowData]="assessments"

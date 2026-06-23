@@ -1,47 +1,82 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { ButtonComponent, EButtonButtonType } from '@netexknowledge/ux-admin-components';
+import {
+  SplitButtonComponent,
+  ESplitButtonColor,
+  ESplitButtonStatus,
+  ESplitButtonMode,
+  ISplitButtonOption,
+  EIconName,
+} from '@netexknowledge/ux-admin-components';
 
 @Component({
   selector: 'app-assessment-action-cell',
   standalone: true,
-  imports: [CommonModule, MatMenuModule, MatButtonModule, MatIconModule, ButtonComponent],
+  imports: [CommonModule, SplitButtonComponent],
   template: `
-    <admin-button
-      [text]="label"
-      [buttonType]="EButtonButtonType.MATSTROKEDBUTTON"
-      (buttonClicked)="onMainClick()">
-    </admin-button>
-
-    <ng-container *ngIf="rowData?.status === 'READY' && !isLaunched">
-      <button mat-icon-button [matMenuTriggerFor]="menu">
-        <mat-icon>more_vert</mat-icon>
-      </button>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="onAction && onAction('link', rowData)">
-          <mat-icon>link</mat-icon>
-          Vincular otro assesment
-        </button>
-      </mat-menu>
-    </ng-container>
+    <admin-split-button
+      [label]="isReady ? 'View' : 'Create'"
+      [color]="isReady ? ESplitButtonColor.PRIMARY : ESplitButtonColor.ACCENT"
+      [status]="ESplitButtonStatus.ENABLED"
+      [mode]="ESplitButtonMode.LIGHT"
+      [options]="options"
+      (onBtnClick)="onMain()"
+      (onDropdownClick)="onOption($event)">
+    </admin-split-button>
   `,
-  styles: [`:host { display: flex; align-items: center; gap: 4px; }`],
+  styles: [`:host { display: flex; justify-content: flex-end; width: 100%; }`],
 })
 export class AssessmentActionCellComponent {
-  @Input() rowData: any;
-  @Input() isLaunched = false;
-  @Input() onAction?: (action: string, row: any) => void;
-  readonly EButtonButtonType = EButtonButtonType;
+  readonly ESplitButtonColor = ESplitButtonColor;
+  readonly ESplitButtonStatus = ESplitButtonStatus;
+  readonly ESplitButtonMode = ESplitButtonMode;
 
-  get label(): string {
-    return this.rowData?.status === 'READY' ? 'View' : 'Create';
+  @Input() onAction?: (action: string, row: any) => void;
+
+  private _rowData: any;
+  private _isLaunched = false;
+
+  // Las options se construyen UNA vez al recibir la fila/estado (no en el template):
+  // admin-split-button no abre el dropdown si 'options' es un getter que cambia de
+  // referencia en cada detección de cambios.
+  options: ISplitButtonOption[] = [];
+
+  @Input()
+  set rowData(value: any) {
+    this._rowData = value;
+    this.options = this.buildOptions();
+  }
+  get rowData(): any {
+    return this._rowData;
   }
 
-  onMainClick(): void {
-    const action = this.rowData?.status === 'READY' ? 'view' : 'create';
-    this.onAction && this.onAction(action, this.rowData);
+  @Input()
+  set isLaunched(value: boolean) {
+    this._isLaunched = value;
+    this.options = this.buildOptions();
+  }
+  get isLaunched(): boolean {
+    return this._isLaunched;
+  }
+
+  get isReady(): boolean {
+    return this._rowData?.status === 'READY';
+  }
+
+  private buildOptions(): ISplitButtonOption[] {
+    // Una vez lanzada la evaluación no se permite vincular/recrear assessments.
+    if (this._isLaunched) return [];
+    if (this._rowData?.status === 'READY') {
+      return [{ id: 'link', text: 'Link another assessment', icon: EIconName.LINK }];
+    }
+    return [];
+  }
+
+  onMain(): void {
+    this.onAction?.(this.isReady ? 'view' : 'create', this._rowData);
+  }
+
+  onOption(option: ISplitButtonOption): void {
+    this.onAction?.(option.id, this._rowData);
   }
 }

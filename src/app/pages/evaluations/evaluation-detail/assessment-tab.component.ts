@@ -113,6 +113,10 @@ export class AssessmentTabComponent {
     );
   }
 
+  get hasPending(): boolean {
+    return this.assessments.some(row => row.status === 'PENDING');
+  }
+
   createAll(): void {
     // El admin-button vive en una celda dinámica de admin-table y su clic corre
     // FUERA de la zona de Angular: cdr.detectChanges no repinta la tabla de forma
