@@ -30,12 +30,12 @@
               "src/assets",
               {
                 "glob": "**/*",
-                "input": "../ux-admin-components-develop/ux-admin-components-develop/dist/ux-admin-components/icons",
+                "input": "src/assets/ux-admin-components/icons",
                 "output": "assets/icons"
               },
               {
                 "glob": "**/*",
-                "input": "../ux-admin-components-develop/ux-admin-components-develop/dist/ux-admin-components/typography",
+                "input": "src/assets/ux-admin-components/typography",
                 "output": "assets/typography"
               }
             ],
@@ -44,7 +44,7 @@
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
-                "../ux-admin-components-develop/ux-admin-components-develop/dist/ux-admin-components/styles"
+                "src/assets/ux-admin-components/styles"
               ]
             },
             "scripts": []
