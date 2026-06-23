@@ -1,4 +1,4 @@
-import { ApplicationRef, Component, Input, NgZone, Type } from '@angular/core';
+import { ApplicationRef, ChangeDetectorRef, Component, Input, NgZone, Type } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   ButtonComponent,
@@ -88,6 +88,7 @@ export class AssessmentTabComponent {
     private assessmentsService: AssessmentsService,
     private targetUsersService: TargetUsersService,
     private appRef: ApplicationRef,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   get isLaunched(): boolean {
@@ -106,11 +107,13 @@ export class AssessmentTabComponent {
   }
 
   get assessments(): IAssessmentRow[] {
-    return this.assessmentsService.getAssessments(
+    const rows = this.assessmentsService.getAssessments(
       this.evaluationId,
       this.jobRoles,
       this.evaluatorTypesPresent,
     );
+    console.log('[assessments getter]', rows.map(r => r.id.split('_').slice(-1)[0] + ':' + r.status));
+    return rows;
   }
 
   handleAction(action: string, row: IAssessmentRow): void {
@@ -120,10 +123,8 @@ export class AssessmentTabComponent {
     } else if (action === 'quit') {
       this.assessmentsService.quit(this.evaluationId, row.id);
     }
-    // Forzamos tick global siempre: con touch los listeners de mat-flat-button
-    // SÍ corren en zona (zone.js los parchea) y el tick automático dispararía,
-    // pero con mouse click el tick no está garantizado desde ngComponentOutlet.
-    // Llamar appRef.tick() fuera de un ciclo de CD es seguro (no lanza errores).
-    this.appRef.tick();
+    // cdr.detectChanges() corre CD en este componente y su subárbol directamente,
+    // sin depender de que appRef.tick() propague desde la raíz correctamente.
+    this.cdr.detectChanges();
   }
 }
