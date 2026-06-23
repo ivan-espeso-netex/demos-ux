@@ -73,7 +73,6 @@ export class AssessmentActionCellComponent {
   }
 
   onMain(): void {
-    console.log('[cell] onMain fired, onAction defined:', !!this.onAction, 'row:', this._rowData?.id);
     this.onAction?.(this.isReady ? 'view' : 'create', this._rowData);
   }
 
