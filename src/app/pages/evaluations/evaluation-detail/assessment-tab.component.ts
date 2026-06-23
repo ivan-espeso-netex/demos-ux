@@ -114,20 +114,16 @@ export class AssessmentTabComponent {
   }
 
   handleAction(action: string, row: IAssessmentRow): void {
+    console.log('[assessment] handleAction', action, row.id, 'inZone:', NgZone.isInAngularZone());
     if (action === 'create' || action === 'import') {
       this.assessmentsService.create(this.evaluationId, row.id, 'Iván Espeso');
     } else if (action === 'quit') {
       this.assessmentsService.quit(this.evaluationId, row.id);
     }
-    // 'link' / 'view' son no-ops por ahora.
-    //
-    // El clic llega desde el split button de una celda dinámica de admin-table,
-    // que se crea FUERA de la zona de Angular → no se programa ningún tick, así
-    // que la tabla no se repinta sola. Forzamos una detección de cambios global:
-    // el getter [rowData] devuelve un array nuevo y admin-table reconstruye su
-    // MatTableDataSource en ngOnChanges, recreando las celdas con el nuevo estado.
-    if (!NgZone.isInAngularZone()) {
-      this.appRef.tick();
-    }
+    // Forzamos tick global siempre: con touch los listeners de mat-flat-button
+    // SÍ corren en zona (zone.js los parchea) y el tick automático dispararía,
+    // pero con mouse click el tick no está garantizado desde ngComponentOutlet.
+    // Llamar appRef.tick() fuera de un ciclo de CD es seguro (no lanza errores).
+    this.appRef.tick();
   }
 }
