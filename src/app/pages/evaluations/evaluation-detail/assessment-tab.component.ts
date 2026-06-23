@@ -1,4 +1,4 @@
-import { Component, Input, NgZone, Type } from '@angular/core';
+import { ApplicationRef, Component, Input, NgZone, Type } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   ButtonComponent,
@@ -87,7 +87,7 @@ export class AssessmentTabComponent {
   constructor(
     private assessmentsService: AssessmentsService,
     private targetUsersService: TargetUsersService,
-    private zone: NgZone,
+    private appRef: ApplicationRef,
   ) {}
 
   get isLaunched(): boolean {
@@ -114,15 +114,20 @@ export class AssessmentTabComponent {
   }
 
   handleAction(action: string, row: IAssessmentRow): void {
-    // El clic llega desde una celda dinámica de admin-table → FUERA de la zona de
-    // Angular. Re-entrar en la zona dispara un tick global que repinta la tabla.
-    this.zone.run(() => {
-      if (action === 'create' || action === 'import') {
-        this.assessmentsService.create(this.evaluationId, row.id, 'Iván Espeso');
-      } else if (action === 'quit') {
-        this.assessmentsService.quit(this.evaluationId, row.id);
-      }
-      // 'link' / 'view' son no-ops por ahora
-    });
+    if (action === 'create' || action === 'import') {
+      this.assessmentsService.create(this.evaluationId, row.id, 'Iván Espeso');
+    } else if (action === 'quit') {
+      this.assessmentsService.quit(this.evaluationId, row.id);
+    }
+    // 'link' / 'view' son no-ops por ahora.
+    //
+    // El clic llega desde el split button de una celda dinámica de admin-table,
+    // que se crea FUERA de la zona de Angular → no se programa ningún tick, así
+    // que la tabla no se repinta sola. Forzamos una detección de cambios global:
+    // el getter [rowData] devuelve un array nuevo y admin-table reconstruye su
+    // MatTableDataSource en ngOnChanges, recreando las celdas con el nuevo estado.
+    if (!NgZone.isInAngularZone()) {
+      this.appRef.tick();
+    }
   }
 }
