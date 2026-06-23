@@ -1,0 +1,82 @@
+<div class="target-users-tab">
+
+  <!-- Empty state -->
+  <div class="target-users-empty" *ngIf="targetUsers.length === 0">
+    <admin-no-content-placeholders
+      title="You haven't added any users yet"
+      description="Let's start adding or importing them!"
+      [imgEntity]="ImgEntityType.PLACEHOLDER_NO_USERS"
+      [splitButtonConfig]="emptyStateConfig"
+      (splitButtonClicked)="openAddPanel()">
+    </admin-no-content-placeholders>
+  </div>
+
+  <!-- Table state -->
+  <div class="target-users-content" *ngIf="targetUsers.length > 0">
+    <div class="target-users-toolbar">
+      <admin-split-button
+        *ngIf="!isLaunched"
+        label="Add users"
+        [leftIcon]="EIconName.ADD"
+        [color]="ESplitButtonColor.ACCENT"
+        [options]="addOptions"
+        (onBtnClick)="openAddPanel()">
+      </admin-split-button>
+      <admin-searchbox
+        placeholder="Search"
+        [(value)]="searchValue">
+      </admin-searchbox>
+    </div>
+
+    <admin-table
+      [columnDefinition]="columnDefinition"
+      [rowData]="filteredTargetUsers"
+      [selectable]="true"
+      [selectionHeaderMessage]="selectionMessage"
+      status="loaded-data"
+      (getSelectedRows)="onSelectionChange($event)">
+      <ng-container selection-header-actions>
+        <ng-container *ngIf="!isLaunched">
+          <admin-button
+            text="Assign evaluator"
+            [buttonType]="EButtonButtonType.MATBUTTON"
+            [color]="EButtonColor.WHITE"
+            (buttonClicked)="onBulkAssignEvaluator()">
+          </admin-button>
+          <admin-button
+            text="Remove"
+            [buttonType]="EButtonButtonType.MATBUTTON"
+            [color]="EButtonColor.WHITE"
+            (buttonClicked)="onRemoveSelected()">
+          </admin-button>
+        </ng-container>
+      </ng-container>
+    </admin-table>
+  </div>
+
+</div>
+
+<!-- Evaluators list panel -->
+<app-evaluators-list-panel
+  *ngIf="showEvaluatorsPanel && evaluatorsPanelUser"
+  [evaluationId]="evaluationId"
+  [targetUserId]="evaluatorsPanelUser.id"
+  [field]="evaluatorsPanelField"
+  (closed)="showEvaluatorsPanel = false">
+</app-evaluators-list-panel>
+
+<!-- Assign evaluator panel (from 3-dot menu or bulk) -->
+<app-add-evaluator-panel
+  *ngIf="showAssignEvaluatorPanel"
+  [availableEvaluators]="availableForAssign"
+  (evaluatorsAdded)="onAssignEvaluatorsAdded($event)"
+  (closed)="showAssignEvaluatorPanel = false">
+</app-add-evaluator-panel>
+
+<!-- Add users panel (fixed overlay) -->
+<app-add-users-panel
+  *ngIf="showAddPanel"
+  [availableUsers]="availableForPanel"
+  (usersAdded)="onUsersAdded($event)"
+  (closed)="showAddPanel = false">
+</app-add-users-panel>

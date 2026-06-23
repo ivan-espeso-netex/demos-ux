@@ -1,0 +1,31 @@
+<div class="panel-overlay">
+  <!-- Header -->
+  <div class="panel-toolbar">
+    <div class="panel-toolbar__left">
+      <admin-button
+        [buttonType]="EButtonButtonType.MATICONBUTTON"
+        [leftIcon]="EIconName.CLOSE"
+        (buttonClicked)="closed.emit()">
+      </admin-button>
+      <span class="panel-toolbar__title">Used in evaluations · {{ title }}</span>
+    </div>
+  </div>
+
+  <div class="panel-body">
+    <admin-table
+      *ngIf="evaluations.length > 0"
+      [columnDefinition]="columnDefinition"
+      [rowData]="evaluations"
+      [selectable]="false"
+      status="loaded-data">
+    </admin-table>
+
+    <div class="panel-empty" *ngIf="evaluations.length === 0">
+      <admin-no-content-placeholders
+        title="Not used in any evaluation"
+        description="This assessment is not being used yet"
+        [imgEntity]="ImgEntityType.PLACEHOLDER_NO_CONTENT">
+      </admin-no-content-placeholders>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,84 @@
+<div class="panel-overlay">
+  <div class="panel-toolbar">
+    <div class="panel-toolbar__left">
+      <admin-button
+        [buttonType]="EButtonButtonType.MATICONBUTTON"
+        [leftIcon]="EIconName.CLOSE"
+        (buttonClicked)="closed.emit()">
+      </admin-button>
+      <span class="panel-toolbar__title">{{ panelTitle }}</span>
+    </div>
+    <div class="panel-toolbar__actions">
+      <admin-button
+        text="Cancel"
+        [buttonType]="EButtonButtonType.MATSTROKEDBUTTON"
+        (buttonClicked)="closed.emit()">
+      </admin-button>
+      <admin-button
+        [text]="ctaLabel"
+        [buttonType]="EButtonButtonType.MATFLATBUTTON"
+        [color]="EButtonColor.ACCENT"
+        (buttonClicked)="onSave()">
+      </admin-button>
+    </div>
+  </div>
+
+  <div class="panel-content">
+    <!-- Action title -->
+    <div class="form-field-wrapper">
+      <admin-input
+        label="Action title"
+        [required]="true"
+        [(ngModel)]="title">
+      </admin-input>
+      <span class="field-error" *ngIf="titleError">{{ titleError }}</span>
+    </div>
+
+    <!-- Objective -->
+    <div class="form-field-wrapper">
+      <admin-textarea
+        label="Objective"
+        [required]="true"
+        [(ngModel)]="objective">
+      </admin-textarea>
+      <span class="field-error" *ngIf="objectiveError">{{ objectiveError }}</span>
+    </div>
+
+    <!-- Timeline -->
+    <div class="form-field-wrapper">
+      <admin-select
+        label="Timeline"
+        [required]="true"
+        [options]="timelineOptions"
+        [(ngModel)]="timeline">
+      </admin-select>
+    </div>
+
+    <!-- KPIs -->
+    <div class="kpis-section">
+      <p class="kpis-section__label">KPIs / Expected results</p>
+
+      <div class="kpi-list">
+        <div class="kpi-item" *ngFor="let kpi of kpis; let i = index; trackBy: trackByIndex">
+          <admin-input
+            label="KPI"
+            [required]="false"
+            [(ngModel)]="kpis[i]">
+          </admin-input>
+          <admin-button
+            [buttonType]="EButtonButtonType.MATICONBUTTON"
+            [leftIcon]="EIconName.CLOSE"
+            (buttonClicked)="removeKpi(i)">
+          </admin-button>
+        </div>
+      </div>
+
+      <admin-button
+        text="Add KPI/Expected results"
+        [buttonType]="EButtonButtonType.MATSTROKEDBUTTON"
+        [leftIcon]="EIconName.ADD"
+        (buttonClicked)="addKpi()">
+      </admin-button>
+    </div>
+  </div>
+</div>

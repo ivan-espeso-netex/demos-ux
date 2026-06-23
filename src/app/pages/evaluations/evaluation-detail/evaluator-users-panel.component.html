@@ -1,0 +1,29 @@
+<div class="panel-overlay">
+  <!-- Header -->
+  <div class="panel-toolbar">
+    <div class="panel-toolbar__left">
+      <admin-button
+        [buttonType]="EButtonButtonType.MATICONBUTTON"
+        [leftIcon]="EIconName.CLOSE"
+        (buttonClicked)="closed.emit()">
+      </admin-button>
+      <span class="panel-toolbar__title">Evaluaciones</span>
+    </div>
+  </div>
+
+  <div class="panel-body">
+    <div class="panel-filters">
+      <admin-searchbox
+        placeholder="Search users"
+        [(value)]="searchValue">
+      </admin-searchbox>
+    </div>
+
+    <admin-table
+      [columnDefinition]="columnDefinition"
+      [rowData]="filteredUsers"
+      [selectable]="false"
+      status="loaded-data">
+    </admin-table>
+  </div>
+</div>

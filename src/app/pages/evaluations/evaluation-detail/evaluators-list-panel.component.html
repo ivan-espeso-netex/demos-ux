@@ -1,0 +1,52 @@
+<div class="panel-overlay">
+  <div class="panel-toolbar">
+    <div class="panel-toolbar__left">
+      <admin-button
+        [buttonType]="EButtonButtonType.MATICONBUTTON"
+        [leftIcon]="EIconName.CLOSE"
+        (buttonClicked)="closed.emit()">
+      </admin-button>
+      <span class="panel-toolbar__title">{{ title }}</span>
+    </div>
+  </div>
+
+  <div class="panel-content">
+    <ng-container *ngIf="evaluators.length > 0">
+      <div class="panel-filters">
+        <admin-button
+          text="Add evaluator"
+          [buttonType]="EButtonButtonType.MATFLATBUTTON"
+          [color]="EButtonColor.ACCENT"
+          [leftIcon]="EIconName.ADD"
+          (buttonClicked)="showAddEvaluatorPanel = true">
+        </admin-button>
+        <admin-searchbox
+          placeholder="Search"
+          [(value)]="searchValue">
+        </admin-searchbox>
+      </div>
+
+      <admin-table
+        [columnDefinition]="columnDefinition"
+        [rowData]="filteredEvaluators"
+        status="loaded-data">
+      </admin-table>
+    </ng-container>
+
+    <admin-no-content-placeholders
+      *ngIf="evaluators.length === 0"
+      title="You haven't added any evaluators yet"
+      description="Add evaluators to start the evaluation process"
+      [imgEntity]="ImgEntityType.PLACEHOLDER_NO_USERS"
+      [menuButtonConfig]="addEvaluatorEmptyConfig"
+      (menuButtonClicked)="showAddEvaluatorPanel = true">
+    </admin-no-content-placeholders>
+  </div>
+</div>
+
+<app-add-evaluator-panel
+  *ngIf="showAddEvaluatorPanel"
+  [availableEvaluators]="availableForPanel"
+  (evaluatorsAdded)="onEvaluatorsAdded($event)"
+  (closed)="showAddEvaluatorPanel = false">
+</app-add-evaluator-panel>

@@ -1,0 +1,54 @@
+<div class="app-layout">
+  <admin-sidenav [opened]="sidenavOpened" (toggleSidenav)="onToggleSidenav()">
+    <admin-sidenav-button
+      text="People"
+      [icon]="EIconName.PEOPLE"
+      routerLink="/people">
+    </admin-sidenav-button>
+
+    <admin-sidenav-button
+      text="Evaluations"
+      [icon]="EIconName.MILITARY_TECH"
+      routerLink="/evaluations">
+    </admin-sidenav-button>
+
+    <admin-sidenav-menu-button
+      text="Configuration"
+      [icon]="EIconName.SETTINGS"
+      [expanded]="true">
+      <admin-sidenav-button
+        text="Skills framework"
+        [size]="ESidenavButtonSize.SMALL"
+        routerLink="/configuration/skills">
+      </admin-sidenav-button>
+      <admin-sidenav-button
+        text="Job families"
+        [size]="ESidenavButtonSize.SMALL"
+        routerLink="/configuration/job-families">
+      </admin-sidenav-button>
+      <admin-sidenav-button
+        text="Assessments"
+        [size]="ESidenavButtonSize.SMALL"
+        routerLink="/configuration/assessments">
+      </admin-sidenav-button>
+      <admin-sidenav-button
+        text="Evaluation types"
+        [size]="ESidenavButtonSize.SMALL"
+        routerLink="/configuration/evaluation-types">
+      </admin-sidenav-button>
+    </admin-sidenav-menu-button>
+  </admin-sidenav>
+
+  <div class="app-main">
+    <admin-toolbar
+      [panelHeaderType]="EToolbarPanelHeaderType.MAIN"
+      [logoImgUrl]="logoImgUrl"
+      [breadcrumbs]="breadcrumbs"
+      (click)="onToolbarClick($event)">
+    </admin-toolbar>
+
+    <div class="app-content">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

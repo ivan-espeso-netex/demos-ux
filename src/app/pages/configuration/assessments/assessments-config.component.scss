@@ -1,0 +1,21 @@
+.assessments-config {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 64px);
+}
+
+.assessments-config admin-no-content-placeholders {
+  margin: auto 0;
+}
+
+.assessments-config__toolbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.assessments-config__table {
+  width: 100%;
+}

@@ -1,0 +1,47 @@
+<div class="panel-overlay">
+  <div class="panel-toolbar">
+    <div class="panel-toolbar__left">
+      <admin-button
+        [buttonType]="EButtonButtonType.MATICONBUTTON"
+        [leftIcon]="EIconName.CLOSE"
+        (buttonClicked)="onClose()">
+      </admin-button>
+      <span class="panel-toolbar__title">Add target user/s</span>
+    </div>
+    <div class="panel-toolbar__actions">
+      <admin-button
+        text="Cancel"
+        [buttonType]="EButtonButtonType.MATSTROKEDBUTTON"
+        (buttonClicked)="onClose()">
+      </admin-button>
+      <admin-button
+        text="Add"
+        [buttonType]="EButtonButtonType.MATFLATBUTTON"
+        [color]="EButtonColor.ACCENT"
+        (buttonClicked)="onAdd()">
+      </admin-button>
+    </div>
+  </div>
+
+  <div class="panel-content">
+    <div class="panel-filters">
+      <admin-searchbox
+        placeholder="Search"
+        [(value)]="searchValue">
+      </admin-searchbox>
+      <admin-button
+        text="Filter"
+        [buttonType]="EButtonButtonType.MATSTROKEDBUTTON"
+        [leftIcon]="EIconName.FILTER_LIST">
+      </admin-button>
+    </div>
+
+    <admin-table
+      [columnDefinition]="columnDefinition"
+      [rowData]="filteredUsers"
+      [selectable]="true"
+      status="loaded-data"
+      (getSelectedRows)="onSelectionChange($event)">
+    </admin-table>
+  </div>
+</div>

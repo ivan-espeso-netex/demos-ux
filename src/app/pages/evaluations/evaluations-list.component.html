@@ -1,0 +1,35 @@
+<div class="evaluations-list">
+  <div class="evaluations-list__toolbar">
+    <admin-button
+      text="New evaluation"
+      [buttonType]="EButtonButtonType.MATFLATBUTTON"
+      [color]="EButtonColor.ACCENT"
+      [leftIcon]="EIconName.ADD"
+      (buttonClicked)="onNewEvaluation()">
+    </admin-button>
+
+    <admin-searchbox
+      placeholder="Search"
+      [(value)]="searchValue">
+    </admin-searchbox>
+  </div>
+
+  <div class="evaluations-list__table" *ngIf="rowData.length > 0">
+    <admin-table
+      [columnDefinition]="columnDefinition"
+      [rowData]="filteredRows"
+      [selectable]="true"
+      [selectionHeaderMessage]="'items selected'"
+      status="loaded-data">
+    </admin-table>
+  </div>
+
+  <admin-no-content-placeholders
+    *ngIf="rowData.length === 0"
+    title="No evaluations yet"
+    description="Create your first evaluation to start measuring competencies across your organization"
+    [imgEntity]="ImgEntityType.PLACEHOLDER_NO_CONTENT"
+    [menuButtonConfig]="emptyConfig"
+    (menuButtonClicked)="onNewEvaluation()">
+  </admin-no-content-placeholders>
+</div>
