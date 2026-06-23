@@ -1,4 +1,4 @@
-import { Component, Input, Type } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, Type } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   ButtonComponent,
@@ -87,6 +87,7 @@ export class AssessmentTabComponent {
   constructor(
     private assessmentsService: AssessmentsService,
     private targetUsersService: TargetUsersService,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   get isLaunched(): boolean {
@@ -118,6 +119,8 @@ export class AssessmentTabComponent {
         this.assessmentsService.create(this.evaluationId, row.id, 'Iván Espeso');
       }
     }
+    // El clic corre fuera de NgZone (celda de admin-table): forzar CD para repintar la tabla.
+    this.cdr.detectChanges();
   }
 
   handleAction(action: string, row: IAssessmentRow): void {
@@ -129,5 +132,7 @@ export class AssessmentTabComponent {
       // link another assessment — prototype no-op
     }
     // 'view' is no-op for now
+    // El clic corre fuera de NgZone (celda de admin-table): forzar CD para repintar la tabla.
+    this.cdr.detectChanges();
   }
 }

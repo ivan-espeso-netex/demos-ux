@@ -88,8 +88,28 @@ export class AssessmentsService {
       const exists = rows.find(r => r.id === rowId);
       const updated = exists
         ? rows.map(r => r.id === rowId ? { ...r, ...patch } : r)
-        : [...rows, { id: rowId, name: '', jobRole: '', evaluatorType: '', creator: '-', modified: '-', status: 'PENDING', ...patch }];
+        : [...rows, { ...this._newRowFromId(evaluationId, rowId), ...patch }];
       return { ...map, [evaluationId]: updated };
     });
+  }
+
+  // Deriva name/jobRole/evaluatorType del id (`${evaluationId}_${role}_${type}`)
+  // para que una fila creada "al vuelo" (no pre-cargada en el seed) quede completa
+  // y la columna Name no aparezca en blanco tras pulsar Create.
+  private _newRowFromId(evaluationId: number, rowId: string): IAssessmentRow {
+    const prefix = `${evaluationId}_`;
+    const rest = rowId.startsWith(prefix) ? rowId.slice(prefix.length) : rowId;
+    const lastSep = rest.lastIndexOf('_');
+    const jobRole = lastSep >= 0 ? rest.slice(0, lastSep) : rest;
+    const evaluatorType = lastSep >= 0 ? rest.slice(lastSep + 1) : '';
+    return {
+      id: rowId,
+      name: `${jobRole} - ${evaluatorType}`,
+      jobRole,
+      evaluatorType,
+      creator: '-',
+      modified: '-',
+      status: 'PENDING',
+    };
   }
 }
